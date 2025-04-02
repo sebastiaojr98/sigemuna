@@ -16,7 +16,7 @@
                       <h6 class="mb-0">Total</h6>
                     </div>
                   </div>
-                  <div class="display-5 fs-1 my-3 fw-normal font-sans-serif text-primary" style="font-size: 10pt;">{{number_format($total, 2, ".", " ")}} MT</div>
+                  <div class="display-5 fs-1 my-3 fw-normal font-sans-serif text-primary" style="font-size: 10pt;">{{formatAmount($total)}} MT</div>
                 </div>
               </div>
             </div>

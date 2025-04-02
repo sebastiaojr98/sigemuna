@@ -108,8 +108,3 @@ Route::get("logout", function(){
 
 
 Route::get('2fv', TwoFactoryVerify::class)->name('two-factory-verify')->middleware(['guest']);
-
-
-Route::get('testes', function(){
-    return view('relatories.invoice');
-});

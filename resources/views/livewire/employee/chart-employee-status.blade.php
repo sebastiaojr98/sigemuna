@@ -7,7 +7,7 @@
             height: 400,
         },
         series: {{$data}},
-        labels: ['Todos', 'Ativos', 'Demitidos', "Ferias", "Suspensos", "L. Paternidade", "L. Maternidade", "Doentes"]
+        labels: ['Ativos', 'Demitidos', "Ferias", "Suspensos", "L. Paternidade", "L. Maternidade", "Doentes"]
     };
 
   var chart = new ApexCharts(document.querySelector("#chart-employee-status"), options);

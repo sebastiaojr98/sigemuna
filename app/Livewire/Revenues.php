@@ -257,7 +257,20 @@ class Revenues extends Component
     //Imprimindo Recibo
     public function printRevenue(InternalRevenue $internalRevenue)
     {
-        $internalRevenue->logo = $this->createLogo();
+        //dd($internalRevenue);
+        $data = view('relatories.receipt2', ["revenue" => $internalRevenue])->render();
+
+        $fileName = uniqid().".pdf";
+
+        try {
+            PdfService::browserShot($data, (storage_path("/app/receipts/".$fileName)));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return Storage::disk('local')->download("receipts/".$fileName, $fileName);
+
+        /*$internalRevenue->logo = $this->createLogo();
         $internalRevenue->qrcode = $this->makeQrcodeRecipt($internalRevenue);
 
         $data = view('relatories.receipt', ["revenue" => $internalRevenue])->render();
@@ -280,7 +293,7 @@ class Revenues extends Component
             return Storage::disk("public")->download($caminhoDoArquivo, $nomeDoArquivo);
         } catch (Exception $e) {
             dd($e->getMessage());
-        }
+        }*/
 
     }
 
