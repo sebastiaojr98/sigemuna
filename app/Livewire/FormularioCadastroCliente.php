@@ -109,7 +109,7 @@ class FormularioCadastroCliente extends Component
             }
         }
 
-        $this->sendMessage($client->full_name, $client->phone, $client->code);
+        //$this->sendMessage($client->full_name, $client->phone, $client->code);
         return redirect()->route('client', $client->id);
 
     }
