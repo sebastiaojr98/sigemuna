@@ -31,7 +31,7 @@ class Employees extends Component
 
     public function mount()
     {
-        $this->employees2 = Employee::all()->count();
+        //$this->employees2 = Employee::all()->count();
         $this->active = Employee::where("working_status", "=", "1")->get()->count();
         $this->fired = Employee::where("working_status", "=", "0")->get()->count();
         $this->vacation = Employee::where("working_status", "=", "2")->get()->count();
@@ -41,7 +41,7 @@ class Employees extends Component
         $this->sick = Employee::where("working_status", "=", "6")->get()->count();
 
         $this->employee_status = [
-            $this->employees2,
+            //$this->employees2,
             $this->active,
             $this->fired,
             $this->vacation,
@@ -55,7 +55,6 @@ class Employees extends Component
     public function render()
     {
         if ($this->search_employee):
-            //$internal_revenues = InternalRevenue::where("process_number", "LIKE", "%{$this->search_employee}%")->orderBy("status", "asc")->orderBy("id", "desc")->paginate(3);
             $this->employees = Employee::with(["gender"])->orWhere("code", "LIKE", "%{$this->search_employee}%")->orWhere("first_name", "LIKE", "%{$this->search_employee}%")->orWhere("last_name", "LIKE", "%{$this->search_employee}%")->orWhere("nuit", "LIKE", "%{$this->search_employee}%")->paginate(4);
         else:
             $this->employees = Employee::with(["gender"])->paginate(4);

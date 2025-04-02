@@ -107,10 +107,9 @@ class FormularioServicoCliente extends Component
             ]);
 
             DB::commit();
-            $this->sendMessage($client->full_name, $client->phone, $service_order->reference);
             $this->clearService();
             return $this->dispatch("cadastrado", [
-                "modal" => "#meusServicos", //id do modal
+                "modal" => "#meusServicos",
                 "title" => "Prestação de Serviço!",
                 "icon" => "success",
                 "text" => "A actividade de ". $service_order->service->name. " foi solicitada com sucesso! Dirija-se ao sector financeiro para efetuar o pagamento."
@@ -135,12 +134,5 @@ class FormularioServicoCliente extends Component
         $neighborhood = "";
         $observation = "";
 
-    }
-
-    private function sendMessage($name, $phone, $code)
-    {
-        $name = Strings::removeAccents($name);
-        $message = "[EMUSANA PORTAL] Ola senhor/a {$name} o codigo do servico e: ". $code. ". Conserve e dirija-se com o no sector financeiro!";
-        return SMS::send($phone, $message);
     }
 }

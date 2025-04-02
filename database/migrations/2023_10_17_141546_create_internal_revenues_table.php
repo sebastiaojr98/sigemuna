@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('type_revenue_id');
             $table->unsignedBigInteger('client_id');
             $table->decimal('amount', 12, 2);
-            $table->date('expense_date');
             $table->date('payday')->nullable();
             $table->string('process_number');
             $table->text('description')->nullable();

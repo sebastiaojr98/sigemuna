@@ -8,6 +8,7 @@ use App\Models\ServiceOrder;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\TypeRevenue;
+use App\Services\Finance\PdfService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -23,7 +24,8 @@ use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Label\Label;
 use Endroid\QrCode\RoundBlockSizeMode\RoundBlockSizeModeMargin;
-use Endroid\QrCode\Writer\PngWriter;    
+use Endroid\QrCode\Writer\PngWriter;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Revenues extends Component
 {
@@ -234,10 +236,41 @@ class Revenues extends Component
         //dd($this->revenues);
     }
 
+    //Imprimindo Factura
+    public function printInvoice(InternalRevenue $internalRevenue):StreamedResponse
+    {
+        $data = view('relatories.invoice', ["revenue" => $internalRevenue])->render();
+
+        $fileName = uniqid().".pdf";
+
+        try {
+            PdfService::browserShot($data, (storage_path("/app/invoices/".$fileName)));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return Storage::disk('local')->download("invoices/".$fileName, $fileName);
+
+    }
+
+
     //Imprimindo Recibo
     public function printRevenue(InternalRevenue $internalRevenue)
     {
-        $internalRevenue->logo = $this->createLogo();
+        //dd($internalRevenue);
+        $data = view('relatories.receipt2', ["revenue" => $internalRevenue])->render();
+
+        $fileName = uniqid().".pdf";
+
+        try {
+            PdfService::browserShot($data, (storage_path("/app/receipts/".$fileName)));
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        return Storage::disk('local')->download("receipts/".$fileName, $fileName);
+
+        /*$internalRevenue->logo = $this->createLogo();
         $internalRevenue->qrcode = $this->makeQrcodeRecipt($internalRevenue);
 
         $data = view('relatories.receipt', ["revenue" => $internalRevenue])->render();
@@ -260,7 +293,7 @@ class Revenues extends Component
             return Storage::disk("public")->download($caminhoDoArquivo, $nomeDoArquivo);
         } catch (Exception $e) {
             dd($e->getMessage());
-        }
+        }*/
 
     }
 

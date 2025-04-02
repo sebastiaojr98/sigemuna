@@ -10,7 +10,7 @@ var options = {
       type: 'donut',
     },
     series: {{$data}},
-    labels: ['Receitas', 'Despesas', 'Investimentos', 'Financiamentos', 'Total']
+    labels: ['Receitas', 'Despesas', 'Investimentos', 'Financiamentos']
   };
 
   var chart = new ApexCharts(document.querySelector("#chart-finance"), options);

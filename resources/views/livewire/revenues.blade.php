@@ -84,6 +84,9 @@
                                         <i class="fas fa-file-pdf text-danger" style="font-size: 15pt;"></i>
                                       </button>
                                     @else
+                                      <button class="btn btn-sm btn-transparent" wire:click="printInvoice({{$internal_revenue->id}})">
+                                        <i class="fas fa-file-pdf text-danger" style="font-size: 15pt;"></i>
+                                      </button>
                                       @can('pay revenue')
                                         <button class="btn btn-sm btn-primary" wire:click="$dispatch('make-payment', { code: '{{$internal_revenue->process_number}}', revenue: {{$internal_revenue->id}} })">
                                           <i class="fas fa-check"></i>
@@ -115,39 +118,6 @@
                 </div>
             </div>
         </div>
-        {{--<div class="col-xxl-4">
-          <div class="card">
-            <div class="card-header d-flex flex-between-center py-2 border-bottom">
-              <h6 class="mb-0">Analise grafica de Despesas</h6>
-            </div>
-            <div class="card-body d-flex flex-column justify-content-between">
-              <div class="row align-items-center">
-                <div class="col-md-5 col-xxl-12 mb-xxl-1">
-                  <div class="position-relative">
-                    <div id="chartx2"></div>
-                  </div>
-                  <div class="col-xxl-12 col-md-7">
-                    <hr class="mx-nx1 mb-0 d-md-none d-xxl-block" />
-                    <div class="d-flex flex-between-center border-bottom py-3 pt-md-0 pt-xxl-3">
-                      <div class="d-flex">
-                        <h6 class="text-700 mb-0"><i class="fas fa-male"></i> Homens </h6>
-                      </div>
-                      <p class="fs--1 text-500 mb-0 fw-semi-bold">1052</p>
-                      <h6 class="text-700 mb-0">33%</h6>
-                    </div>
-                    <div class="d-flex flex-between-center border-bottom py-3 pt-md-0 pt-xxl-3">
-                      <div class="d-flex">
-                        <h6 class="text-700 mb-0"><i class="fas fa-female"></i> Mulheres </h6>
-                      </div>
-                      <p class="fs--1 text-500 mb-0 fw-semi-bold">2200</p>
-                      <h6 class="text-700 mb-0">67%</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>--}}
         
     </div>
 

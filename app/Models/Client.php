@@ -35,6 +35,11 @@ class Client extends Model
         return $this->hasMany(ClientAddress::class, "client_id", "id");
     }
 
+    public function clientAddressLast()
+    {
+        return $this->hasOne(ClientAddress::class, "client_id", "id")->latest();
+    }
+
     public function gender()
     {
         return $this->belongsTo(Gender::class, "gender_id", "id");
