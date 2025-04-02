@@ -358,16 +358,6 @@
                                     <div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="https://mail.google.com/" target="_blank"><img class="rounded" src="{{asset("assets/img/nav-icons/gmail.png")}}" alt="" width="40" height="40" />
                                         <p class="mb-0 fw-medium text-800 text-truncate fs--2 pt-1">Gmail</p>
                                       </a></div>
-                                    {{--<div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="#!" target="_blank"><img class="rounded" src="{{asset("assets/img/nav-icons/facebook.png")}}" alt="" width="40" height="40" />
-                                        <p class="mb-0 fw-medium text-800 text-truncate fs--2 pt-1">Facebbok</p>
-                                      </a></div>
-                                    {{--<div class="col-4"><a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-center text-decoration-none" href="app/events/event-detail.html" target="_blank">
-                                        <div class="avatar avatar-2xl">
-                                          <div class="avatar-name rounded-circle bg-primary-subtle text-primary"><span class="fs-2">E</span></div>
-                                        </div>
-                                        <p class="mb-0 fw-medium text-800 text-truncate fs--2">Events</p>
-                                      </a></div>
-                                    <div class="col-12"><a class="btn btn-outline-primary btn-sm mt-4" href="#!">Show more</a></div>--}}
                                   </div>
                                 </div>
                               </div>
@@ -376,7 +366,7 @@
                         </li>
                         <li class="nav-item dropdown"><a class="nav-link pe-0 ps-2" id="navbarDropdownUser" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="avatar avatar-xl">
-                              <img class="rounded-circle" src="{{asset('storage/'.auth()->user()->picture)}}" alt="" />
+                              <img class="rounded-circle" src="{{auth()->user()->picture ? asset('storage/'.auth()->user()->picture) : asset('img/avatar.png')}}" alt="" />
                             </div>
                           </a>
                           <div class="dropdown-menu dropdown-caret dropdown-caret dropdown-menu-end py-0" aria-labelledby="navbarDropdownUser">
