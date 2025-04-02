@@ -147,7 +147,7 @@ class FormularioLicenca extends Component
 
             DB::commit();
 
-            $this->sendMessage($client->full_name, $client->phone, $license_order->reference);
+            //$this->sendMessage($client->full_name, $client->phone, $license_order->reference);
             $this->clearLicense();
 
             return $this->dispatch("cadastrado", [
@@ -209,7 +209,7 @@ class FormularioLicenca extends Component
                 "user_create_id" => auth()->user()->id
             ]);
             DB::commit();
-            $this->sendMessage($client->full_name, $client->phone, $license_order->reference);
+            //$this->sendMessage($client->full_name, $client->phone, $license_order->reference);
             $this->clearLicense();
             return $this->dispatch("cadastrado", [
                 "modal" => "#minhasLicencas", //id do modal
