@@ -23,7 +23,7 @@
                   <div class="col-12">
                       <div class="card font-sans-serif">
                           <div class="card-body d-flex gap-3 flex-column flex-sm-row align-items-center">
-                              <img class="rounded-3" src="../../assets/img/elearning/avatar/student.png" alt="" width="112" />
+                              <img class="rounded-3" src="{{asset('dashboard/img/consumer-icon.png')}}" alt="" width="112" />
                               <table class="table table-borderless fs--1 fw-medium mb-0">
                                   <tbody>
                                     <tr>
