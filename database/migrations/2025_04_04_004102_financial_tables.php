@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id');
             $table->string('number')->unique();
-            $table->enum('type', ['Serviço', 'Liçensa', 'Multa']);
+            $table->enum('type', ['Serviço', 'Licença', 'Multa']);
             $table->decimal('total_amount', 10, 2);
             $table->date('due_date');
             $table->timestamps();
@@ -28,12 +28,16 @@ return new class extends Migration
         Schema::create('accounts_receivable', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('invoice_id');
+            $table->unsignedBigInteger('customer_id');
             $table->decimal('amount_due', 10, 2);
             $table->decimal('amount_paid', 10, 2)->default(0);
+            $table->string("invoice_number");
             $table->enum('status', ['Pendente', 'Parcialmente pago', 'Pago'])->default('Pendente');
+            $table->date('due_date');
             $table->timestamps();
 
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
         });
 
         // Tabela de Multas

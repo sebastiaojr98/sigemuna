@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('service_contracteds', function (Blueprint $table) {
             $table->id();
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->enum('status', ['Activo', 'Cancelado', 'Finalizado'])->default('Activo');
+            $table->enum('status', ['Pendente', 'Activo', 'Cancelado', 'Finalizado'])->default('Pendente');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('service_id');
             $table->timestamps();

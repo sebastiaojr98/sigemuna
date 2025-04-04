@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->decimal('base_price', 10, 2);
             $table->enum('billing_type', ['Único', 'Mensal', 'Anual']);
-            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
+            $table->enum('status', ['Activo', 'inactivo', 'Suspenso'])->default('Activo');
             $table->timestamps();
         });
     }

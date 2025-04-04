@@ -27,6 +27,8 @@ use App\Livewire\SubServices;
 use App\Livewire\UserProfile;
 use App\Livewire\TwoFactoryVerify;
 use App\Http\Controllers\Teste;
+use App\Livewire\Customers\Customer;
+use App\Livewire\Customers\Customers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +59,12 @@ Route::get("employee/{employee}", Employee::class)->middleware(["auth"])->name("
 //Rotas independentes de Clients
 Route::get("clients", Clients::class)->middleware(["auth"])->name("clients")->middleware(['permission:view customer report']);
 Route::get("client/{client}", Client::class)->middleware(["auth"])->name("client")->middleware(['permission:create client']);
+
+
+//Clientes usando o prefixo customer
+Route::get("customers", Customers::class)->middleware(["auth"])->name("customers")->middleware(['permission:view customer report']);;
+Route::get("customers/{customer}", Customer::class)->middleware(["auth"])->name("customer")->middleware(['permission:create client']);;
+
 
 //Rotas independentes de Despesas
 Route::get("expenses", Expenses::class)->middleware(["auth"])->name("expenses")->middleware(['permission:view expense report']);

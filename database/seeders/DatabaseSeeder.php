@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\AccountType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -38,5 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);
         $this->call(RoleHasPermissionSeeder::class);
+        $this->call(ServiceCategorySeeder::class);
+        $this->call(ServiceSeeder::class);
     }
 }

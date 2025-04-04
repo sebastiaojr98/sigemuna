@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum("type_customer", ["PF", "PJ"])->default("PF");
             $table->string('name');
-            $table->string('nuit')->unique()->nullable();
+            $table->string('nuit')->nullable();
             $table->string('phone');
             $table->string('secondary_phone')->nullable();
             $table->string('email')->nullable();

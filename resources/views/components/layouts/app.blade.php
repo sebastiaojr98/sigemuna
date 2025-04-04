@@ -32,6 +32,7 @@
           font-size: 8pt;
         }
         </style>
+        @stack('form-wizard')
     </head>
     <body>
         <div>
@@ -241,9 +242,6 @@
                                   </li>
                               </ul>
                             @endcan
-                            {{--<a class="nav-link @yield('complaints')" href="{{route("complaints")}}" role="button">
-                              <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-list"></span></span><span class="nav-link-text ps-1">Reclamações</span></div>
-                            </a>--}}
                           </li>
                         </ul>
                       </div>
