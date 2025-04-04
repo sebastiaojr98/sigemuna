@@ -29,14 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeContactSeeder::class);
         $this->call(DepartmentSeeder::class);
         $this->call(PositionCompanySeeder::class);
-        $this->call(AccountTypeSeeder::class);
         $this->call(ServiceSeeder::class);
-        $this->call(SubServiceSeeder::class);
-        $this->call(LicenseTypeSeeder::class);
-        $this->call(LicenseStatusSeeder::class);
-        $this->call(FormPaymentSeeder::class);
-        $this->call(TypeRevenueSeeder::class);
-        $this->call(TypeExpenseSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
         $this->call(FinancierTypeSeeder::class);
         $this->call(TypeInvestorSeeder::class);
         $this->call(InfrastructureTypeSeeder::class);

@@ -10,21 +10,21 @@ class Expense extends Model
     use HasFactory;
 
     protected $fillable = [
-        'reference',
-        'type_expense_id',
+        'category_id',
+        'supplier_id',
         'amount',
-        'expense_date',
-        'description',
-        'document',
-        'user_create_id'
+        'start_date',
+        'is_recurring',
+        'frequency',
     ];
-
-
-    //chart
-
-    public function typeExpense()
+    
+    public function category()
     {
-        return $this->belongsTo(TypeExpense::class, "type_expense_id", "id");
+        return $this->belongsTo(ExpenseCategory::class, 'category_id');
     }
-
+    
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id');
+    }
 }
