@@ -84,6 +84,12 @@ class PaymentForm extends Component
 
             $re->accountReceivable->save();
 
+            //Ativando o servićo
+            if($re->invoice->serviceContracted->status == "Pendente"):
+                $re->invoice->serviceContracted->status = "Activo";
+                $re->invoice->serviceContracted->save();
+            endif;
+
             DB::commit();
 
             $this->dispatch('updateComponent')->to(AccountsReceivable::class);
