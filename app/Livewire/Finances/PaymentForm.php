@@ -87,7 +87,19 @@ class PaymentForm extends Component
             //Ativando o servićo
             if($re->invoice->serviceContracted->status == "Pendente"):
                 $re->invoice->serviceContracted->status = "Activo";
+                $re->invoice->serviceContracted->start_date = now();
                 $re->invoice->serviceContracted->save();
+            endif;
+
+            
+
+            if($re->invoice->type === "Licença"):
+                if (($re->invoice->serviceContracted->license->status === "Pendente") || ($re->invoice->serviceContracted->license->status === "Expirada")) {
+                    $re->invoice->serviceContracted->license->issue_date = now();
+                    $re->invoice->serviceContracted->license->due_date = now()->addYear(1);
+                    $re->invoice->serviceContracted->license->status = "Emitida";
+                    $re->invoice->serviceContracted->license->save();
+                }
             endif;
 
             DB::commit();
@@ -103,7 +115,6 @@ class PaymentForm extends Component
 
         } catch (\Exception $e) {
             DB::rollBack();
-
             return $this->dispatch("pagamento", [
                 "modal" => "#makePayment",
                 "title" => "Falha",

@@ -128,6 +128,7 @@
                         {{--<th>Data de inicio</th>
                         <th>Data de termino</th>--}}
                         <th class="text-center">Estado</th>
+                        <th class="text-center">Ação</th>
                       </tr>
                     </thead>
                     <tbody class="list">
@@ -145,6 +146,15 @@
                                 <span class="badge bg-danger">Cancelado</span>
                             @else
                                 <span class="badge bg-success">Finalizado</span>
+                            @endif
+                        </td>
+                        <td class="text-center">
+                            @if($service->status ==  "Activo")
+                                <button class="btn btn-warning btn-sm" wire:click='disableService({{$service->id}})'>
+                                    <i class="fa fa-ban"></i>
+                                </button>
+                            @else
+                            -
                             @endif
                         </td>
                       </tr>

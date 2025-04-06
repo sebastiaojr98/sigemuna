@@ -29,7 +29,10 @@ return new class extends Migration
 
             $table->date('issue_date')->nullable();
             $table->date('due_date')->nullable();
-            $table->enum('status', ['Pendente', 'Activa', 'Expirada', 'Cancelada'])->default('Pendente');
+            $table->enum('status', ['Pendente', 'Emitida', 'Expirada', 'Cancelada'])->default('Pendente');
+            
+            $table->enum('printed', ['Não', 'Sim'])->default('Não');
+            $table->enum('signed', ['Não', 'Sim'])->default('Não');
 
             $table->timestamps();
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ServiceContracted extends Model
 {
@@ -26,5 +27,10 @@ class ServiceContracted extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function license(): HasOne
+    {
+        return $this->hasOne(License::class, 'service_contracted_id', 'id');
     }
 }

@@ -28,4 +28,10 @@ class Customer extends Component
 
         return view('livewire.customers.customer')->with(["customer" => $this->customer, "contractedServices" => $contractedServices]);
     }
+
+    public function disableService(ServiceContracted $service): void
+    {
+        $service->status = "Cancelado";
+        $service->save();
+    }
 }
