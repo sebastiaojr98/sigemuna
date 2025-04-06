@@ -57,11 +57,6 @@ Route::middleware([
 Route::get("employees", Employees::class)->middleware(["auth"])->name("employees")->middleware(['permission:view employee report']);
 Route::get("employee/{employee}", Employee::class)->middleware(["auth"])->name("employee")->middleware(['permission:create employee']);
 
-//Rotas independentes de Clients
-Route::get("clients", Clients::class)->middleware(["auth"])->name("clients")->middleware(['permission:view customer report']);
-Route::get("client/{client}", Client::class)->middleware(["auth"])->name("client")->middleware(['permission:create client']);
-
-
 //Clientes usando o prefixo customer
 Route::get("customers", Customers::class)->middleware(["auth"])->name("customers")->middleware(['permission:view customer report']);;
 Route::get("customers/{customer}", Customer::class)->middleware(["auth"])->name("customer")->middleware(['permission:create client']);;
@@ -72,9 +67,6 @@ Route::get("accounts-receivable", AccountsReceivable::class)->middleware(["auth"
 
 //Rotas independentes de Despesas
 Route::get("expenses", Expenses::class)->middleware(["auth"])->name("expenses")->middleware(['permission:view expense report']);
-
-//Rotas independentes de Receitas Internas
-Route::get("revenues", Revenues::class)->middleware(["auth"])->name("revenues")->middleware(['permission:view revenue report']);
 
 //Rotas independentes de Investidores
 Route::get("investors", Investors::class)->middleware(["auth"])->name("investors")->middleware(['permission:view investor']);
@@ -91,21 +83,6 @@ Route::get("financings", Financings::class)->middleware(["auth"])->name("financi
 
 //Rotas independentes de reclamcoes
 Route::get("complaints", Complaints::class)->middleware(["auth"])->name("complaints");
-
-
-//Rotas de enderecos
-Route::get("administrative-posts", AdministrativePosts::class)->middleware(["auth"])->name("administrative-posts")->middleware(['permission:view addresses']);
-
-Route::get("neighborhoods", Neighborhoods::class)->middleware(["auth"])->name("neighborhoods")->middleware(['permission:view addresses']);
-
-Route::get("communal-units", CommunalUnits::class)->middleware(["auth"])->name("communal-units")->middleware(['permission:view addresses']);
-
-//Rotas de Actividades Servicos e Licencas
-Route::get("services", Services::class)->middleware(["auth"])->name("services")->middleware(['permission:view activities']);
-
-Route::get("sub-services", SubServices::class)->middleware(["auth"])->name("sub-services")->middleware(['permission:view activities']);
-
-Route::get("licenses", Licenses::class)->middleware(["auth"])->name("licenses")->middleware(['permission:view activities']);
 
 Route::get("infrastructures", Infrastructures::class)->middleware(["auth"])->name("infrastructures")->middleware(['permission:view infrastructure report'])->middleware(['permission:view infrastructure report']);
 Route::get("infrastructure/{infrastructure}", Infrastructure::class)->middleware(["auth"])->name("infrastructure")->middleware(['permission:create infrastructure'])->middleware(['permission:create infrastructure']);

@@ -131,7 +131,7 @@
                                   @endcan
                                   @can('view revenue report')
                                     <li class="nav-item">
-                                      <a class="nav-link @yield("revenues")" href="{{route("revenues")}}">
+                                      <a class="nav-link @yield("revenues")" href="{{--route("revenues")--}}">
                                         <div class="d-flex align-items-center">
                                           <span class="nav-link-text ps-1">Receitas Internas</span>
                                         </div>
@@ -186,60 +186,6 @@
                                       </a><!-- more inner pages-->
                                     </li>
                                   @endcan
-                              </ul>
-                            @endcan
-
-                            @can('view addresses')
-                              <a class="nav-link dropdown-indicator" href="#address" role="button" data-bs-toggle="collapse" aria-expanded="false">
-                                <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-map-marker-alt"></span></span><span class="nav-link-text ps-1">Endereços</span></div>
-                              </a>
-                              <ul class="nav collapse show" id="address">
-                                <li class="nav-item">
-                                  <a class="nav-link @yield('administrativePosts')" href="{{route("administrative-posts")}}">
-                                    <div class="d-flex align-items-center">
-                                      <span class="nav-link-text ps-1">Postos Administrativos</span>
-                                    </div>
-                                  </a><!-- more inner pages-->
-                                </li>
-                                <li class="nav-item">
-                                  <a class="nav-link @yield("neighborhoods")" href="{{route("neighborhoods")}}">
-                                    <div class="d-flex align-items-center">
-                                      <span class="nav-link-text ps-1">Bairros</span>
-                                    </div>
-                                  </a><!-- more inner pages-->
-                                </li>
-                                <li class="nav-item">
-                                  <a class="nav-link @yield("communal-units")" href="{{route("communal-units")}}">
-                                    <div class="d-flex align-items-center">
-                                      <span class="nav-link-text ps-1">Unidades Comunais</span>
-                                    </div>
-                                  </a><!-- more inner pages-->
-                                </li>
-                              </ul>
-                            @endcan
-
-                            @can('view activities')
-                              <a class="nav-link dropdown-indicator" href="#activity" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="email">
-                                  <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-cogs"></span></span><span class="nav-link-text ps-1">Atividades</span></div>
-                              </a>
-                              <ul class="nav collapse show" id="activity">
-                                  <li class="nav-item">
-                                    <a class="nav-link @yield("services")" href="{{route("services")}}">
-                                      <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Serviços</span>
-                                      </div>
-                                    </a><!-- more inner pages-->
-                                    <a class="nav-link @yield("sub-services")" href="{{route("sub-services")}}">
-                                      <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Sub Serviços</span>
-                                      </div>
-
-                                    <a class="nav-link @yield("licenses")" href="{{route("licenses")}}">
-                                      <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Licenças</span>
-                                      </div>
-                                    </a><!-- more inner pages-->
-                                  </li>
                               </ul>
                             @endcan
                           </li>
