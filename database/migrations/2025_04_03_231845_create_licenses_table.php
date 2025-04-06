@@ -24,11 +24,11 @@ return new class extends Migration
 
             $table->integer('house_number')->nullable();
             $table->integer('block')->nullable();
-            $table->bigInteger('communal_unit_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('communal_unit_id')->nullable();
 
 
-            $table->date('issue_date');
-            $table->date('due_date');
+            $table->date('issue_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->enum('status', ['Pendente', 'Activa', 'Expirada', 'Cancelada'])->default('Pendente');
 
             $table->timestamps();

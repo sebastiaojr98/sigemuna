@@ -3,11 +3,16 @@
 namespace App\Livewire\Customers;
 
 use App\Models\AccountReceivable;
+use App\Models\CommunalUnity;
 use App\Models\Invoice;
 use App\Models\Service;
 use Livewire\Component;
 use App\Models\ServiceCategory;
 use App\Models\ServiceContracted;
+use App\Services\Customer\LicenseCustomerService;
+use App\Services\Finance\AccountReceivableService;
+use App\Services\Finance\InvoiceService;
+use App\Services\Finance\ServiceContractedService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Features\SupportEvents\Event;
@@ -21,6 +26,17 @@ class ContractedServiceForm extends Component
 
     public $services = [];
 
+    public string $licenseType = '';
+
+    public string $communalUnit = '';
+    public string $houseNumber = '';
+    public string $block = '';
+
+    public string $carBrand = '';
+    public string $carModel = '';
+    public string $carRegistration = '';
+
+    
     public  function mount($customer)
     {
         $this->customer = $customer;
@@ -31,12 +47,25 @@ class ContractedServiceForm extends Component
     {
         $serviceCategories = ServiceCategory::all();
 
-        return view('livewire.customers.contracted-service-form')->with(["serviceCategories" => $serviceCategories]);
+        $communalUnits = CommunalUnity::all(['id', 'label']);
+        return view('livewire.customers.contracted-service-form')
+            ->with([
+                "serviceCategories" => $serviceCategories,
+                'communalUnits' => $communalUnits
+            ]);
     }
 
     public function searchService(): void
     {
-        $this->services = Service::where("category_id", $this->serviceCategory)->get();
+        
+        $category = ServiceCategory::with('services')
+            ->find($this->serviceCategory);
+
+        $this->licenseType = $category->code;
+
+        $this->services = $category->services;
+        $this->reset(['service', 'communalUnit', 'houseNumber', 'block', 'carBrand', 'carModel', 'carRegistration']);
+
     }
 
 
@@ -47,41 +76,43 @@ class ContractedServiceForm extends Component
             'service' => 'required|exists:services,id'
         ]);
 
+        if ($this->licenseType === "00001") {
+            $this->validate([
+                'communalUnit' => 'required|exists:communal_unities,id',
+                'houseNumber' => 'integer|min:1|max:1000',
+                'block' => 'integer|min:1|max:1000'
+            ]);
+        }
+
+        if ($this->licenseType === "00002") {
+            $this->validate([
+                'carBrand' => 'required|min:5|max:20',
+                'carModel' => 'required|min:5|max:20',
+                'carRegistration' => 'required|min:5|max:15',
+            ]);
+        }
+
         DB::beginTransaction();
 
         try {
 
-            //Registar contratacao de servico
-            $sc = ServiceContracted::create([
-                'customer_id' => $this->customer->id,
-                'service_id' => $this->service,
-                'user_create_id' => auth()->user()->id
-            ]);
+            $sc = ServiceContractedService::create($this->customer->id, $this->service);
+            $isLicense = str_contains(strtolower($sc->service->name), "licença");
+            $invoice = InvoiceService::create($sc->customer_id, $isLicense, $sc->id, $sc->service->base_price);
+            AccountReceivableService::create($invoice->id, $invoice->customer_id, $invoice->number, $invoice->total_amount, $invoice->due_date);
 
-            //Gerar Uma Fatura
-            //dd($sc->service->name);
-            $str = str_contains(strtolower($sc->service->name), "licença");
-            
-            $invoice = Invoice::create([
-                'customer_id' => $sc->customer_id,
-                'number' => "FT-".date("Y/m")."/".mt_rand(10000, 99999),
-                'type' => $str ? "Licença" : "Serviço",
-                'service_contracted_id' => $sc->id,
-                'total_amount' => $sc->service->base_price,
-                'due_date' => now()->addDay(30),
-            ]);
+            if ($isLicense && ($invoice->serviceContracted->service->category->code === "00001")) {
+                LicenseCustomerService::supply($sc->id, $sc->customer_id, $this->houseNumber, $this->block, $this->communalUnit);
+            }
 
-            $ar = AccountReceivable::create([
-                'invoice_id' => $invoice->id,
-                'customer_id' => $invoice->customer_id,
-                'invoice_number' => $invoice->number,
-                'amount_due' => $invoice->total_amount,
-                'due_date' => $invoice->due_date
-            ]);
-            
+            if ($isLicense && ($invoice->serviceContracted->service->category->code === "00002")) {
+                LicenseCustomerService::transport($sc->id, $sc->customer_id, $this->carBrand, $this->carModel, $this->carRegistration); 
+            }
+
             DB::commit();
 
             $this->dispatch('updateComponent')->to(Customer::class);
+            $this->clearFields();
 
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",
@@ -92,6 +123,8 @@ class ContractedServiceForm extends Component
 
         } catch (\Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
+            $this->clearFields();
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",
                 "title" => "Falha!",
@@ -99,5 +132,17 @@ class ContractedServiceForm extends Component
                 "text" => "Falha ao solicitar o servico, tenta novamente mais tarde."
             ]);
         }
+    }
+
+    private function clearFields(): void
+    {
+        $this->serviceCategory = '';
+        $this->service = '';
+        $this->communalUnit = '';
+        $this->houseNumber = '';
+        $this->block = '';
+        $this->carBrand = '';
+        $this->carModel = '';
+        $this->carRegistration = '';
     }
 }
