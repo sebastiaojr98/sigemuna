@@ -66,6 +66,7 @@ class ContractedServiceForm extends Component
                 'customer_id' => $sc->customer_id,
                 'number' => "FT-".date("Y/m")."/".mt_rand(10000, 99999),
                 'type' => $str ? "Licença" : "Serviço",
+                'service_contracted_id' => $sc->id,
                 'total_amount' => $sc->service->base_price,
                 'due_date' => now()->addDay(30),
             ]);
