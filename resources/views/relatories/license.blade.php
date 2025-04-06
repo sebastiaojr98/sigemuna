@@ -102,7 +102,7 @@
 
                         <p style="color: #000; text-align: center; font-weight: bold;">O Presidente</p>
                         <p style="color: #000; text-align: center; font-weight: bolder;">____________________________________</p>
-                        <p style="color: #000; text-align: center; font-weight: bold;">Paulo Vahanle</p>
+                        <p style="color: #000; text-align: center; font-weight: bold;">Luís Abdula Giquira</p>
 
                         <div style="position: absolute;">
                             <div style="position: relative">

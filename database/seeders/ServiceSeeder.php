@@ -21,21 +21,23 @@ class ServiceSeeder extends Seeder
             if ($serviceCategorie->code === "00001") {
                 Service::create([
                     'code' => "SE-00001",
-                    'name' => "Licença de fornecimento de água potável(Residencial)",
+                    'name' => "Licença de abastecimento de água potável provedor (Residencial)",
                     'category_id' => $serviceCategorie->id,
-                    'description' => "Licença de fornecimento de água potável(Residencial)",
+                    'description' => "Licença de abastecimento de água potável (Residencial)",
                     'base_price' => 2500,
                     'billing_type' => "Anual",
                 ]);
                 Service::create([
                     'code' => "SE-00002",
-                    'name' => "Licença de fornecimento de água potável(Industrial)",
+                    'name' => "Licença de abastecimento de água potável provedor (Industrial)",
                     'category_id' => $serviceCategorie->id,
-                    'description' => "Licença de fornecimento de água potável(Industrial)",
+                    'description' => "Licença de abastecimento de água potável provedor (Industrial)",
                     'base_price' => 7500,
                     'billing_type' => "Anual",
                 ]);
+            }
 
+            if($serviceCategorie->code === "00002"){
                 Service::create([
                     'code' => "SE-00003",
                     'name' => "Licença de transporte de água potável viaturas de ate 5m3",

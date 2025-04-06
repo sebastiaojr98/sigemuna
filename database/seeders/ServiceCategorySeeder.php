@@ -15,7 +15,12 @@ class ServiceCategorySeeder extends Seeder
     {
         ServiceCategory::create([
             "code" => "00001",
-            "name" => "Emissão de Licença"
+            "name" => "Licença de abastecimento"
+        ]);
+
+        ServiceCategory::create([
+            "code" => "00002",
+            "name" => "Licença de transporte"
         ]);
     }
 }
