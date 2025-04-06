@@ -18,6 +18,7 @@ class Customer extends Model
         'phone',
         'secondary_phone',
         'email',
+        'user_create_id'
     ];
 
     public function documents(): HasMany

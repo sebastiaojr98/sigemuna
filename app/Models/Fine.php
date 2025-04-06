@@ -14,6 +14,7 @@ class Fine extends Model
         'invoice_id',
         'reason',
         'fine_amount',
+        'user_create_id'
     ];
 
     public function customer()

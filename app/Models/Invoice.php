@@ -15,6 +15,7 @@ class Invoice extends Model
         'type',
         'total_amount',
         'due_date',
+        'description'
     ];
 
     public function customer()

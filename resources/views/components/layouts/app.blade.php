@@ -111,7 +111,7 @@
                               </a>
                             @endcan
                             @can('view customer report')
-                              <a class="nav-link @yield("clients")" href="{{route("clients")}}" role="button">
+                              <a class="nav-link @yield("clients")" href="{{route("customers")}}" role="button">
                                   <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-user-friends"></span></span><span class="nav-link-text ps-1">Clientes</span></div>
                               </a>
                             @endcan
@@ -485,25 +485,16 @@
           //Swall de Pagamento pelos servicos
             window.document.addEventListener("pagamento", (event) => {
               
+              $(`${event.__livewire.params[0].modal}`).modal("hide");
+
               Swal.fire({
                 title: `${event.__livewire.params[0].title}`,
                 text: `${event.__livewire.params[0].text}`,
                 icon: `${event.__livewire.params[0].icon}`,
-                timer: 5000,
-                timerProgressBar: true,
-                showConfirmButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Fechar',
                 customClass: {
                   confirmButton: 'btn btn-primary px-4', // Adicione a classe do Bootstrap para botão de sucesso
-                },
-                didOpen: () => {
-                  Swal.showLoading();
-                  const timer = Swal.getPopup().querySelector("b");
-                  timerInterval = setInterval(() => {
-                    timer.textContent = `${Swal.getTimerLeft()}`;
-                  }, 5000);
-                },
-                willClose: () => {
-                  clearInterval(timerInterval);
                 }
               });
             });

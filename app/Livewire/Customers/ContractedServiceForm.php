@@ -54,6 +54,7 @@ class ContractedServiceForm extends Component
             $sc = ServiceContracted::create([
                 'customer_id' => $this->customer->id,
                 'service_id' => $this->service,
+                'user_create_id' => auth()->user()->id
             ]);
 
             //Gerar Uma Fatura
@@ -80,19 +81,18 @@ class ContractedServiceForm extends Component
 
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",
-                "title" => "Contratação de serviço!",
+                "title" => "Sucesso!",
                 "icon" => "success",
                 "text" => "Uma fatura com o número ". $invoice->number ." foi gerada, dirija-se ao setor financeiro para efetuar o pagamento."
             ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",
-                "title" => "Prestação de Serviço!",
-                "icon" => "success",
-                "text" => "A actividade de ". $service_order->service->name. " foi solicitada com sucesso! Dirija-se ao sector financeiro para efetuar o pagamento."
+                "title" => "Falha!",
+                "icon" => "error",
+                "text" => "Falha ao solicitar o servico, tenta novamente mais tarde."
             ]);
         }
     }

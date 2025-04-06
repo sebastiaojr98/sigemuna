@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AccountReceivable extends Model
 {
@@ -29,5 +30,10 @@ class AccountReceivable extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function receipts(): HasMany
+    {
+        return $this->hasMany(Receipt::class, "account_receivable_id", "id");
     }
 }

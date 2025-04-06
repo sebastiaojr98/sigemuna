@@ -14,6 +14,7 @@ class CustomerAddress extends Model
         'neighborhood_id',
         'street',
         'number',
+        'user_create_id'
     ];
 
     public function customer()

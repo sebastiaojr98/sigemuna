@@ -16,6 +16,7 @@ class CustomerDocument extends Model
         'expires_at',
         'notes',
         'customer_id',
+        'user_create_id'
     ];
 
     public function customer()

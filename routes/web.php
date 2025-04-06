@@ -29,6 +29,7 @@ use App\Livewire\TwoFactoryVerify;
 use App\Http\Controllers\Teste;
 use App\Livewire\Customers\Customer;
 use App\Livewire\Customers\Customers;
+use App\Livewire\Finances\AccountsReceivable;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -65,6 +66,9 @@ Route::get("client/{client}", Client::class)->middleware(["auth"])->name("client
 Route::get("customers", Customers::class)->middleware(["auth"])->name("customers")->middleware(['permission:view customer report']);;
 Route::get("customers/{customer}", Customer::class)->middleware(["auth"])->name("customer")->middleware(['permission:create client']);;
 
+
+//Financas contas a pagar
+Route::get("accounts-receivable", AccountsReceivable::class)->middleware(["auth", 'permission:view customer report'])->name("accounts-receivable");
 
 //Rotas independentes de Despesas
 Route::get("expenses", Expenses::class)->middleware(["auth"])->name("expenses")->middleware(['permission:view expense report']);

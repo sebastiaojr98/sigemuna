@@ -117,7 +117,8 @@ class CustomerRegistrationForm extends Component
                 'nuit' => $this->nuit,
                 'phone'=> $this->phone,
                 'secondary_phone' => $this->secondaryPhone,
-                'email' => $this->email
+                'email' => $this->email,
+                'user_create_id' => auth()->user()->id
             ]);
 
             foreach ($this->documents as $doc) {
@@ -129,7 +130,8 @@ class CustomerRegistrationForm extends Component
                     'expires_at' => $this->expirationDate ? $this->expirationDate : null,
                     'file_path' => $path,
                     'customer_id' => $customer->id,
-                    'notes' => $this->observation
+                    'notes' => $this->observation,
+                    'user_create_id' => auth()->user()->id
                 ]);
 
             }
@@ -140,6 +142,7 @@ class CustomerRegistrationForm extends Component
                 'number' => $this->streetNumber,
                 'customer_id' => $customer->id,
                 'reference' => $this->reference,
+                'user_create_id' => auth()->user()->id
             ]);
 
             DB::commit();

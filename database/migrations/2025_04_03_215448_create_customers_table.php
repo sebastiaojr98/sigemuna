@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('phone');
             $table->string('secondary_phone')->nullable();
             $table->string('email')->nullable();
+            $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
+
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
 

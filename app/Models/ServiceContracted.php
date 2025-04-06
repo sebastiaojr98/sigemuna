@@ -15,6 +15,7 @@ class ServiceContracted extends Model
         'status',
         'customer_id',
         'service_id',
+        'user_create_id'
     ];
 
     public function customer()

@@ -18,10 +18,12 @@ return new class extends Migration
             $table->enum('status', ['Pendente', 'Activo', 'Cancelado', 'Finalizado'])->default('Pendente');
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('service_id');
+            $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
 

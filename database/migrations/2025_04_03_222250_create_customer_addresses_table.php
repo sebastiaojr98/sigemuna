@@ -18,11 +18,13 @@ return new class extends Migration
             $table->string('street')->nullable();
             $table->string('number')->nullable();
             $table->string('reference')->nullable();
+            $table->unsignedBigInteger("user_create_id");
             
             $table->timestamps();
             
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('neighborhood_id')->references('id')->on('neighborhoods');
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
 

@@ -18,10 +18,12 @@ return new class extends Migration
             $table->date('expires_at')->nullable();
             $table->text('notes')->nullable();
             $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
             
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
             $table->foreign('document_type_id')->references('id')->on('document_types');
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
 

@@ -19,9 +19,10 @@ return new class extends Migration
             $table->enum('type', ['Serviço', 'Licença', 'Multa']);
             $table->decimal('total_amount', 10, 2);
             $table->date('due_date');
+            $table->text('description')->nullable();
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
 
         // Tabela de Contas a Receber
@@ -36,8 +37,8 @@ return new class extends Migration
             $table->date('due_date');
             $table->timestamps();
 
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
 
         // Tabela de Multas
@@ -47,23 +48,31 @@ return new class extends Migration
             $table->unsignedBigInteger('invoice_id');
             $table->string('reason');
             $table->decimal('fine_amount', 10, 2);
+            $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
 
         // Tabela de Recibos
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('invoice_id');
+            $table->unsignedBigInteger('account_receivable_id');
             $table->decimal('amount_paid', 10, 2);
+            $table->string('file_path')->nullable();
             $table->unsignedBigInteger('payment_method_id');
             $table->dateTime('payment_date');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
 
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
-            $table->foreign('payment_method_id')->references('id')->on('payment_methods')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('invoices');
+            $table->foreign('account_receivable_id')->references('id')->on('accounts_receivable');
+            $table->foreign('payment_method_id')->references('id')->on('payment_methods');
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
 

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Receipt extends Model
 {
@@ -11,9 +12,13 @@ class Receipt extends Model
 
     protected $fillable = [
         'invoice_id',
+        'account_receivable_id',
         'amount_paid',
         'payment_method_id',
         'payment_date',
+        'file_path',
+        'user_create_id',
+        'description'
     ];
 
     public function invoice()
@@ -24,5 +29,10 @@ class Receipt extends Model
     public function paymentMethod()
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function accountReceivable(): BelongsTo
+    {
+        return $this->belongsTo(AccountReceivable::class, 'account_receivable_id', 'id');
     }
 }
