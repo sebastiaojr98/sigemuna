@@ -19,10 +19,12 @@ return new class extends Migration
             $table->enum('type', ['Serviço', 'Licença', 'Multa']);
             $table->decimal('total_amount', 10, 2);
             $table->date('due_date');
+            $table->unsignedBigInteger('service_contracted_id');
             $table->text('description')->nullable();
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreign('service_contracted_id')->references('id')->on('service_contracteds');
         });
 
         // Tabela de Contas a Receber
