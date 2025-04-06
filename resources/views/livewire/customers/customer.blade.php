@@ -1,11 +1,11 @@
 <div>
-    <div class="card mb-3">
-          <div class="card-body d-flex flex-wrap flex-between-center">
-                <div>
+        <div class="card mb-3">
+          <div class="card-body row d-flex align-items-center">
+                <div class="col-4">
                     <h6 class="text-primary">{{($customer->type_customer === "PF") ? "Pessoa Física" : "Pessoa Jurídica"}}</h6>
                     <h5 class="mb-0">{{$customer->name}}</h5>
                 </div>
-                <div class="row">
+                <div class="col-8 row">
                     <a style="text-decoration: none" href="#" class="col-4 text-warning">
                         <div class="card overflow-hidden" style="min-width: 12rem">
                           <div class="bg-holder bg-card" style="background-image:url({{asset('assets/img/icons/spot-illustrations/corner-2.png')}});"></div>
@@ -59,7 +59,7 @@
                     </a>
                 </div>
           </div>
-      </div>
+        </div>
   
       <div class="row mb-3">
           <div class="col-5">
@@ -125,17 +125,17 @@
                     <thead class="bg-light text-900 font-sans-serif">
                       <tr class="bg-success text-white">
                         <th>Tipo de serviço</th>
-                        <th>Data de inicio</th>
-                        <th>Data de termino</th>
+                        {{--<th>Data de inicio</th>
+                        <th>Data de termino</th>--}}
                         <th class="text-center">Estado</th>
                       </tr>
                     </thead>
                     <tbody class="list">
-                      @foreach ($customer->contractedServices as $service)
+                      @foreach ($contractedServices as $service)
                       <tr class="fw-semi-bold">
                         <td>{{$service->service->name}}</td>
-                        <td>{{$service->start_date ? $service->start_date : "-"}}</td>
-                        <td>{{$service->end_date ? $service->end_date : "-"}}</td>
+                        {{--<td>{{$service->start_date ? $service->start_date : "-"}}</td>
+                        <td>{{$service->end_date ? $service->end_date : "-"}}</td>--}}
                         <td class="text-center">
                             @if ($service->status == "Pendente")
                                 <span class="badge bg-warning">Pendente</span>
@@ -151,6 +151,9 @@
                       @endforeach
                     </tbody>
                   </table>
+                  <div class="my-3 mx-2">
+                    {{$contractedServices->links()}}
+                  </div>
               </div>
             </div>
           {{-- MODAL DE CADASTRO DE FUNCIONARIOS --}}

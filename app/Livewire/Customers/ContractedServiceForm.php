@@ -9,6 +9,7 @@ use Livewire\Component;
 use App\Models\ServiceCategory;
 use App\Models\ServiceContracted;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use Livewire\Features\SupportEvents\Event;
 
 class ContractedServiceForm extends Component
@@ -26,7 +27,7 @@ class ContractedServiceForm extends Component
 
     }
 
-    public function render()
+    public function render(): View
     {
         $serviceCategories = ServiceCategory::all();
 
@@ -78,6 +79,8 @@ class ContractedServiceForm extends Component
             ]);
             
             DB::commit();
+
+            $this->dispatch('updateComponent')->to(Customer::class);
 
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",

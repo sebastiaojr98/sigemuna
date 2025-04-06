@@ -3,19 +3,29 @@
 namespace App\Livewire\Customers;
 
 use App\Models\Customer as ModelsCustomer;
+use App\Models\ServiceContracted;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Customer extends Component
 {
-    private $customer;
+    use WithPagination;
+    public $customer;
 
     public function mount(ModelsCustomer $customer)
     {
         $this->customer = $customer;
     }
 
+    #[On('updateComponent')]
     public function render()
     {
-        return view('livewire.customers.customer')->with(["customer" => $this->customer]);
+
+        $contractedServices = ServiceContracted::orderBy('created_at', 'desc')
+            ->where('customer_id', $this->customer->id)
+            ->paginate(4);
+
+        return view('livewire.customers.customer')->with(["customer" => $this->customer, "contractedServices" => $contractedServices]);
     }
 }
