@@ -24,9 +24,9 @@ class Invoices extends Component
 
     public function print(Invoice $invoice)
     {
+        //dd($invoice);
         try {
-            $data = view('relatories.invoice')->render();
-            
+            $data = view('relatories.invoice', ["invoice" => $invoice])->render();
             return DomPdfService::make($data, "invoices/files");
         } catch (\Exception $e) {
             dd($e->getMessage());

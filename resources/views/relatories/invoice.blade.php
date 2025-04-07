@@ -69,7 +69,7 @@
         .from{
             float: left;
             margin-right: 35px; 
-            width: 60%;
+            width: 57%;
         }
 
         .to{
@@ -158,7 +158,7 @@
         .footer{
             border-top: 1px solid #007aff;
             position: relative;
-            bottom: -30px;
+            bottom: 0px;
             left: 0;
             text-align: center;
             padding: 0 100px;
@@ -167,14 +167,14 @@
 </head>
 <body>
     <div class="header-wave">
-        <img src="data:image/webp;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTQ0MCAzMjAiPjxwYXRoIGZpbGw9IiNmMWI1MDciIGZpbGwtb3BhY2l0eT0iMSIgZD0iTTAsMjU2TDQ4LDI0MEM5NiwyMjQsMTkyLDE5MiwyODgsMTg2LjdDMzg0LDE4MSw0ODAsMjAzLDU3NiwyMTguN0M2NzIsMjM1LDc2OCwyNDUsODY0LDIyOS4zQzk2MCwyMTMsMTA1NiwxNzEsMTE1MiwxMzMuM0MxMjQ4LDk2LDEzNDQsNjQsMTM5Miw0OEwxNDQwLDMyTDE0NDAsMEwxMzkyLDBDMTM0NCwwLDEyNDgsMCwxMTUyLDBDMTA1NiwwLDk2MCwwLDg2NCwwQzc2OCwwLDY3MiwwLDU3NiwwQzQ4MCwwLDM4NCwwLDI4OCwwQzE5MiwwLDk2LDAsNDgsMEwwLDBaIj48L3BhdGg+PC9zdmc+" alt="" class="wave">
-        <img src="data:image/svg;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTQ0MCAzMjAiPjxwYXRoIGZpbGw9IiNmMWI2MDdhZCIgZmlsbC1vcGFjaXR5PSIxIiBkPSJNMCw2NEw2MCw5MC43QzEyMCwxMTcsMjQwLDE3MSwzNjAsMTk3LjNDNDgwLDIyNCw2MDAsMjI0LDcyMCwxOTJDODQwLDE2MCw5NjAsOTYsMTA4MCwxMDYuN0MxMjAwLDExNywxMzIwLDIwMywxMzgwLDI0NS4zTDE0NDAsMjg4TDE0NDAsMEwxMzgwLDBDMTMyMCwwLDEyMDAsMCwxMDgwLDBDOTYwLDAsODQwLDAsNzIwLDBDNjAwLDAsNDgwLDAsMzYwLDBDMjQwLDAsMTIwLDAsNjAsMEwwLDBaIj48L3BhdGg+PC9zdmc+" alt="" class="wave-2">
+        <img src="{{waveRightBase64()}}" alt="" class="wave">
+        <img src="{{waveLeftBase64()}}" alt="" class="wave-2">
     </div>
 
     <div class="header">
         <div class="header-left">
-            <h1 style="font-size: 30pt; font-weight: bolder; color: #00CBA9;">FACTURA <span style="font-size: 15pt;"></span></h1>
-            <p style="font-weight: bolder; color: #00CBA9;">N.º #00-170</p>
+            <h1 style="font-size: 30pt; font-weight: bolder; color: #007aff;">FACTURA <span style="font-size: 15pt;"></span></h1>
+            <p style="font-weight: bolder; color: #007aff;">#{{$invoice->number}}</p>
         </div>
         <div class="header-right">
             <img class="header-logo" src="{{logoBase64()}}" alt="">
@@ -183,21 +183,22 @@
 
     <div class="to-from">
         <div class="from">
-            <p style="color: #00CBA9; font-weight: bolder; margin-bottom: 10px;">EMUSANA</p>
+            <p style="color: #007aff; font-weight: bolder; margin-bottom: 10px;">EMUSANA</p>
             <p class="text-other">NUIT: 4589675831</p>
             <p class="text-other">Telf: +258 84 521 6358</p>
-            <p class="text-other" style="color: #008c64;">E-mail: info@emusana.co.mz</p>
+            <p class="text-other" style="color: #007aff;">E-mail: info@emusana.co.mz</p>
             <p class="text-other">Endereço: Nampula, Estrada Nacional Número 1, Unidade Comunal Namaterra</p>
         </div>
         <div class="to">
-            <p style="color: #00CBA9; font-weight: bolder; margin-bottom: 10px;">PARA</p>
-            <p class="text-other">Sebastião WEB</p>
+            <p style="color: #007aff; font-weight: bolder; margin-bottom: 10px;">PARA</p>
+            <p class="text-other">{{$invoice->customer->name}}</p>
+            <p class="text-other">{{formatNumberMoz($invoice->customer->phone)}}</p>
         </div>
     </div>
 
 
     <div class="content">
-        <table>
+        <table style="margin-top: 25px;">
             <thead style="height: 25px;">
                 <tr style="background-color: #007aff; border-bottom: none;">
                     <th style="text-align: left; padding-left: 50px;">DESCRIÇÃO</th>
@@ -208,16 +209,16 @@
             </thead>
             <tbody>
                 <tr style="border-bottom: 1px solid #ccccccb2;">
-                    <td style="text-align: left; padding-left: 50px;">Inscricao curso basico de Informatica</td>
+                    <td style="text-align: left; padding-left: 50px;">{{$invoice->serviceContracted->service->name}}</td>
                     <td>1</td>
-                    <td>MZN 1 800.00</td>
-                    <td style="text-align: right; padding-right: 50px;">MZN 1 800.00</td>
+                    <td>MZN {{formatAmount($invoice->total_amount)}}</td>
+                    <td style="text-align: right; padding-right: 50px;">MZN {{formatAmount($invoice->total_amount)}}</td>
                 </tr>
                 <tr style="margin-top: 35px;">
                     <td></td>
                     <td></td>
                     <td style="background-color: #007aff; color: #fff;">Total</td>
-                    <td style="background-color: #007aff; text-align: right; padding-right: 50px; color: #fff;">MZN 2 100.00</td>
+                    <td style="background-color: #007aff; text-align: right; padding-right: 50px; color: #fff;">MZN {{formatAmount($invoice->total_amount)}}</td>
                 </tr>
             </tbody>
         </table>
@@ -225,7 +226,7 @@
         <div style="display: inline;">
             <div class="terms">
                 <h1>NOTA</h1>
-                <p style="font-size: 10; line-height: 15px;">O pagamento desta fatura poderá ser efetuado por depósito ou transferência bancária utilizando os seguintes dados:</p>
+                <p style="font-size: 10; line-height: 15px;">Pague antes de {{date("d-m-Y", strtotime($invoice->due_date))}}, utilizando os seguintes meios depósito ou transferência bancária utilizando os seguintes dados:</p>
                 <ul>
                     <li>Banco: </li>
                     <li>Titular da Conta: </li>

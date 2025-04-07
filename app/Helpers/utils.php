@@ -35,6 +35,20 @@ use Endroid\QrCode\Writer\PngWriter;
         return "data:image/png;base64,".base64_encode($logo);
     }
 
+    function waveLeftBase64(): string
+    {
+        $logo = file_get_contents(public_path("img/wave.png"));
+
+        return "data:image/png;base64,".base64_encode($logo);
+    }
+
+    function waveRightBase64(): string
+    {
+        $logo = file_get_contents(public_path("img/wave2.png"));
+
+        return "data:image/png;base64,".base64_encode($logo);
+    }
+
     function logoCMCNBase64(): string
     {
         $logo = file_get_contents(public_path("img/logo-cmcn.png"));
