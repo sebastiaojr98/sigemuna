@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Finances\AccountsPayable;
 use App\Livewire\App\Licenses as AppLicenses;
 use App\Livewire\Finances\AccountsReceivable;
+use App\Livewire\Finances\Dashboard as FinancesDashboard;
 use App\Livewire\Finances\Expenses as FinancesExpenses;
 
 /*
@@ -57,7 +58,7 @@ Route::middleware([
     //Route::get("/home", Dashboard::class)->name("dashboard-home");
     //Route::get("/employees", DashboardEmployees::class)->name("dashboard-employees");
     Route::get("/infrastructure", DashboardInfra::class)->name("dashboard-infrastructure")->middleware(['permission:view infrastructure report']);
-    Route::get("/finance", DashboardFinance::class)->name("dashboard-finance")->middleware(['permission:view financial report']);
+    Route::get("/finances", FinancesDashboard::class)->name("dashboard-finance")->middleware(['permission:view financial report']);
 })->middleware("auth");
 
 //Rotas independentes de Funcionarios

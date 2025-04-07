@@ -19,7 +19,6 @@ class DashboardInfra extends Component
         $this->maintenance = Infrastructure::where("status", "=", "2")->get()->count();
 
         $this->infras = [
-            $this->operation + $this-> closed + $this->maintenance,
             $this->operation,
             $this->maintenance,
             $this->closed,
