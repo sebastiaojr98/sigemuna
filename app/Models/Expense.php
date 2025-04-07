@@ -16,6 +16,8 @@ class Expense extends Model
         'start_date',
         'is_recurring',
         'frequency',
+        'description',
+        'user_create_id'
     ];
     
     public function category()

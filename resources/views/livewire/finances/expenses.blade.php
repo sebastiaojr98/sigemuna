@@ -1,4 +1,4 @@
-@section('suppliers') active @endsection
+@section('expenses') active @endsection
 
 <div>
     <div class="row mb-3 g-3">
@@ -8,7 +8,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-9 d-flex">
-                        <h1 class="h3 text-primary me-3">Fornecedores</h1>
+                        <h1 class="h3 text-primary me-3">Despesas</h1>
                     </div>
                     <div class="col-3">
                         {{--<form action="">
@@ -35,8 +35,8 @@
                         </button>--}}
                     </div>
                     <div class="mt-4">
-                        <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createSupplier">
-                            <i class="fas fa-user-plus"></i> Novo
+                        <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createExpense">
+                            <i class="fas fa-file-alt"></i> Novo
                         </button>
                     </div>
                 </div>
@@ -46,38 +46,36 @@
                       <thead>
                         <tr class="btn-reveal-trigger">
                             <th scope="col"  style="font-size: 11pt;">Nome</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">NUIT</th>
-                            <th scope="col"  style="font-size: 11pt;">Telefone</th>
-                            <th scope="col"  style="font-size: 11pt;">Email</th>
-                            <th scope="col"  style="font-size: 11pt;">Endereço</th>
-                            <th scope="col"  style="font-size: 11pt;">Estado</th>
+                            <th scope="col"  style="font-size: 11pt;">Fornecedor</th>
+                            <th scope="col"  style="font-size: 11pt;" class="text-center">Recorrente</th>
+                            <th scope="col"  style="font-size: 11pt;">Montante (MT)</th>
+                            <th scope="col"  style="font-size: 11pt;"  class="text-center">Frequência</th>
+                            <th scope="col"  style="font-size: 11pt;">Inicio</th>
                             <th scope="col"  style="font-size: 11pt;" class="text-center">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @foreach($suppliers as $supplier)
+                        @foreach($expenses as $expense)
                         <tr class="btn-reveal-trigger">
-                            <td style="font-size: 10pt;">{{$supplier->name}}</td>
-                            <td style="font-size: 10pt;" class="text-center">{{$supplier->nuit ? $supplier->nuit : "-"}}</td>
-                            <td style="font-size: 10pt;">{{formatNumberMoz($supplier->phone)}}</td>
-                            <td style="font-size: 10pt;">{{$supplier->email ? $supplier->email : "-"}}</td>
-                            <td style="font-size: 10pt;">{{$supplier->address}}</td>
-                            <td class="text-center">
-                                @if ($supplier->status == "Activo")
-                                    <span class="badge bg-success">{{$supplier->status}}</span>
+                            <td style="font-size: 10pt;">{{$expense->category->name}}</td>
+                            <td style="font-size: 10pt;">{{$expense->supplier->name}}</td>
+                            <td style="font-size: 10pt;" class="text-center">{{$expense->is_recurring}}</td>
+                            <td style="font-size: 10pt;">{{formatAmount($expense->amount)}}</td>
+                            <td style="font-size: 10pt;" class="text-center">
+                                @if ($expense->frequency)
+                                    {{$expense->frequency}}
                                 @else
-                                    <span class="badge bg-danger">{{$supplier->status}}</span>
+                                   - 
                                 @endif
                             </td>
+                            <td style="font-size: 10pt;">{{date("d-m-Y", strtotime($expense->start_date))}}</td>
                             <td class="text-center">
-                                @if($supplier->status ==  "Activo")
-                                    <button class="btn btn-warning btn-sm" wire:click='disableSupplier({{$supplier->id}})'>
+                                @if($expense->is_recurring ==  "Sim")
+                                    <button class="btn btn-warning btn-sm" wire:click='disableExpense({{$expense->id}})'>
                                         <i class="fa fa-ban"></i>
                                     </button>
                                 @else
-                                    <button class="btn btn-success btn-sm" wire:click='disableSupplier({{$supplier->id}})'>
-                                        <i class="fa fa-check"></i>
-                                    </button>
+                                    -
                                 @endif
                             </td>
                         </tr>
@@ -85,7 +83,7 @@
                       </tbody>
                     </table>
                     <div>
-                      {{$suppliers->links()}}
+                      {{$expenses->links()}}
                     </div>                          
                   </div>
                   
@@ -97,7 +95,7 @@
     </div>
 
     {{-- MODAL DE CADASTRO DE FUNCIONARIOS --}}
-    <div class="modal fade" id="createSupplier" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="createExpense" data-bs-keyboard="false" data-bs-backdrop="static" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-md mt-4" role="document">
           <div class="modal-content border-0">
             <div class="position-absolute top-0 end-0 mt-3 me-3 z-1">
@@ -105,12 +103,12 @@
             </div>
             <div class="modal-body p-0">
               <div class="bg-light rounded-top-3 py-3 ps-4">
-                <h5 class="mb-1" id="staticBackdropLabel">Cadastrar Fornecedor</h5>
+                <h5 class="mb-1" id="staticBackdropLabel">Cadastrar Despesa</h5>
               </div>
               <div class="px-4 py-3">
 
 
-                <livewire:suppliers.supplier-registration-form />
+                <livewire:finances.expense-registration-form />
 
               </div>
             </div>

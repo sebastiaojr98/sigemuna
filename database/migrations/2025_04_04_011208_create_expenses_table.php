@@ -20,10 +20,12 @@ return new class extends Migration
             $table->enum('is_recurring', ['Sim', 'Não'])->default('Não');
             $table->enum('frequency', ['Mensal', 'Trimestral', 'Anual'])->nullable();
             $table->text('description')->nullable();
+            $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('expense_categories')->onDelete('cascade');
             $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
 

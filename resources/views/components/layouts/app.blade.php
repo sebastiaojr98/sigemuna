@@ -131,7 +131,7 @@
                               <ul class="nav collapse show" id="finances">
                                 @can('view accounts receivable')
                                   <li class="nav-item">
-                                    <a class="nav-link  @yield("expenses")" href="{{route("accounts-receivable")}}">
+                                    <a class="nav-link  @yield("accounts-receivable")" href="{{route("accounts-receivable")}}">
                                       <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contas a receber</span></div>
                                     </a><!-- more inner pages-->
                                   </li>
@@ -156,7 +156,7 @@
                                 </li>
 
                                 <li class="nav-item">
-                                  <a class="nav-link  @yield("expenses")" href="{{route("accounts-receivable")}}">
+                                  <a class="nav-link  @yield("accounts-payable")" href="{{route("accounts-payable")}}">
                                     <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contas a pagar</span></div>
                                   </a><!-- more inner pages-->
                                 </li>

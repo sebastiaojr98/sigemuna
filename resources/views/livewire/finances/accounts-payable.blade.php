@@ -1,4 +1,4 @@
-@section('accounts-receivable') active @endsection
+@section('accounts-payable') active @endsection
 
 <div>
     <div class="row mb-3 g-3">
@@ -8,7 +8,7 @@
             <div class="card-body">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-5">
-                        <h1 class="h3 text-primary">Contas a Receber</h1>
+                        <h1 class="h3 text-primary">Contas a Pagar</h1>
                     </div>
                     <div class="col-7">
                         <div class="row justify-content-between align-items-center"">
@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="col-8 text-center" style="font-size: 11pt;">
                                             <span><strong>Pendente</strong></span><br>
-                                            <span>{{$pending}}</span>
+                                            <span>{{--$pending--}}</span>
                                         </div>  
                                     </div>
                                     
@@ -59,8 +59,8 @@
                                             <i class="fa fa-file-invoice-dollar text-primary" style="font-size: 25pt;"></i>
                                         </div>
                                         <div class="col-8 text-center" style="font-size: 11pt;">
-                                            <span><strong>A receber</strong></span><br>
-                                            <span>MT {{formatAmount($toReceive)}}</span>
+                                            <span><strong>A pagar</strong></span><br>
+                                            <span>MT {{--formatAmount($toReceive)--}}</span>
                                         </div>  
                                     </div>
                                     
@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="col-8 text-center text-danger" style="font-size: 11pt;">
                                             <span><strong>Vencidas</strong></span><br>
-                                            <span>{{$expired}}</span>
+                                            <span>{{--$expired--}}</span>
                                         </div>  
                                     </div>
                                     
@@ -92,43 +92,33 @@
                     <table class="table table-striped table-sms">
                       <thead>
                         <tr class="btn-reveal-trigger">
-                            <th scope="col"  style="font-size: 11pt;">Cliente</th>
-                            <th scope="col"  style="font-size: 11pt;">Factura</th>
+                            <th scope="col"  style="font-size: 11pt;">Despesa</th>
+                            <th scope="col"  style="font-size: 11pt;">Fornecedor</th>
                             <th scope="col"  style="font-size: 11pt;">Valor (MT)</th>
                             <th scope="col"  style="font-size: 11pt;">Pago (MT)</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">Estado</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">Vencimento</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">Recibos</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">Ação</th>
+                            <th scope="col"  style="font-size: 11pt;">Vencimento</th>
+                            <th scope="col"  style="font-size: 11pt;">Comprovativos</th>
+                            <th scope="col"  style="font-size: 11pt;">Estado</th>
+                            <th scope="col"  style="font-size: 11pt;">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse ($accountsReceivable as $accountR)
+                        @forelse ($accountsPayable as $ap)
                         <tr class="btn-reveal-trigger">
-                            <td style="font-size: 10pt;">{{$accountR->customer->name}}</td>
-                            <td style="font-size: 10pt;">{{$accountR->invoice_number}}</td>
-                            <td style="font-size: 10pt;">{{formatAmount($accountR->amount_due)}}</td>
-                            <td style="font-size: 10pt;">{{formatAmount($accountR->amount_paid)}}</td>
-                            <td style="font-size: 10pt;" class="text-center">
-                                @if ($accountR->status == "Pendente")
-                                    <span class="badge bg-warning">Pendente</span>
-                                @elseif($accountR->status == "Parcialmente pago")
-                                    <span class="badge bg-primary">Parcialmente pago</span>
-                                @else
-                                    <span class="badge bg-success">Pago</span>
-                                @endif
-
-                            </td>
-                            <td style="font-size: 10pt;" class="text-center">
-                                @if ($accountR->status == "Pago")
+                            <td style="font-size: 10pt;">{{$ap->expense->name}}</td>
+                            <td style="font-size: 10pt;">{{$ap->supplier->name}}</td>
+                            <td style="font-size: 10pt;">{{formatAmount($ap->amount_due)}}</td>
+                            <td style="font-size: 10pt;">{{formatAmount($ap->amount_paid)}}</td>
+                            <td style="font-size: 10pt;">
+                                @if ($ap->status == "Pago")
                                     -
                                 @else
-                                    {{date('d-m-Y', strtotime($accountR->due_date))}}                                    
+                                    {{date('d-m-Y', strtotime($ap->due_date))}}                                    
                                 @endif
                             </td>
                             <td style="font-size: 10pt;" class="text-center">
                                 
-                                @forelse ($accountR->receipts as $receipt)
+                                @forelse ($ap->supplierPayment as $supplierPayment)
                                     <a target="_blank" href="#"><i class="fa fa-file-pdf text-danger"></i></a>
                                 @empty
                                     -
@@ -136,12 +126,20 @@
 
                             </td>
                             <td style="font-size: 10pt;" class="text-center">
-                                @if ($accountR->status != "Pago")
-                                    @can('pay accounts receivable')
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountReceivable({{$accountR}})'>
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                    @endcan
+                                @if ($ap->status == "Pendente")
+                                    <span class="badge bg-warning">{{$ap->status}}</span>
+                                @elseif($ap->status == "Parcial")
+                                    <span class="badge bg-primary">{{$ap->status}}</span>
+                                @else
+                                    <span class="badge bg-success">{{$ap->status}}</span>
+                                @endif
+
+                            </td>
+                            <td style="font-size: 10pt;" class="text-center">
+                                @if ($ap->status != "Pago")
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountReceivable({{$ap}})'>
+                                        <i class="fa fa-check"></i>
+                                    </button>
                                 @else
                                     -
                                 @endif
@@ -156,7 +154,7 @@
                       </tbody>
                     </table>
                     <div>
-                      {{$accountsReceivable->links()}}
+                      {{$accountsPayable->links()}}
                     </div>                          
                   </div>
                   
