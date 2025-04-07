@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Livewire\Customers;
+namespace App\Livewire\Suppliers;
 
-use App\Models\Customer;
-use App\Models\CustomerAddress;
-use App\Models\CustomerDocument;
 use App\Models\DocumentType;
-use App\Models\Neighborhood;
+use App\Models\Supplier;
+use App\Models\SupplierDocument;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\Features\SupportEvents\Event;
 use Livewire\WithFileUploads;
 
-class CustomerRegistrationForm extends Component
+class SupplierRegistrationForm extends Component
 {
+
     use WithFileUploads;
 
     public $step = 1;
 
-    public $typeCustomer = '';
     public $name = '';
     public $nuit = '';
     public $phone = '';
@@ -33,31 +32,25 @@ class CustomerRegistrationForm extends Component
     public array $documents = [];
 
 
-    public string $neighborhood = '';
-    public string $street = '';
-    public string $streetNumber = '';
-    public string $reference = '';
+    public string $address = '';
 
     public function render()
     {
-        $typeCustomers = [
-            ['name' => "PF", "description" => "Pessoa Física"],
-            ['name' => "PJ", "description" => "Pessoa Jurídica"],
-        ];
-
         $documentTypes = DocumentType::all(['id', 'description']);
-        $neighborhoods = Neighborhood::all(['id', 'label']);
-        return view('livewire.customers.customer-registration-form')
-            ->with(["typeCustomers" => $typeCustomers, "documentTypes" => $documentTypes, "neighborhoods" => $neighborhoods]);
+
+        return view('livewire.suppliers.supplier-registration-form')
+            ->with([
+                "documentTypes" => $documentTypes
+            ]);
     }
+
 
     public function nextStep(): void
     {
         switch ($this->step) {
             case '1':
                 $this->validate([
-                    'typeCustomer' => 'required|size:2',
-                    'name' => 'required|min:3|max:20',
+                    'name' => 'required|min:3|max:50',
                     'nuit' => 'nullable|size:9',
                     'phone'=> 'required|size:9',
                     'secondaryPhone' => 'nullable|size:9',
@@ -90,78 +83,74 @@ class CustomerRegistrationForm extends Component
             'documentType' => $this->documentType,
             'expirationDate' => $this->expirationDate,
             'file' => $this->file,
-            'observation' => $this->observation
+            'observation' => $this->observation ? $this->observation : ''
         ];
 
         $this->reset(['documentType', 'expirationDate', 'file', 'observation']);
     }
 
-    public function createCustomer(): void
+    public function createSupplier(): Event|\Exception
     {
         $this->validate([
-            'neighborhood' => 'required|exists:neighborhoods,id',
-            'street' => 'string|max:150',
-            'streetNumber' => 'numeric|min:1|max:99999',
-            'reference' => 'nullable|string|max:255',
+            'address' => 'required|min:5|max:70',
         ]);
 
-        
-        //Cadastrando o Cliente
         DB::beginTransaction();
 
         try {
-            
-            $customer = Customer::create([
-                'type_customer' => $this->typeCustomer,
+            $su = Supplier::create([
                 'name' => $this->name,
-                'nuit' => $this->nuit,
-                'phone'=> $this->phone,
-                'secondary_phone' => $this->secondaryPhone,
-                'email' => $this->email,
+                'email' => $this->email ? $this->email : null,
+                'phone' => $this->phone,
+                'secondary_phone' => $this->secondaryPhone ? $this->secondaryPhone : null,
+                'address' => $this->address,
+                'nuit' => $this->nuit ? $this->nuit : null,
                 'user_create_id' => auth()->user()->id
             ]);
 
             foreach ($this->documents as $doc) {
 
-                $path = $doc['file']->store('customers/documents');
+                $path = $doc['file']->store('suppliers/documents');
 
-                CustomerDocument::create([
+                SupplierDocument::create([
                     'document_type_id' => $doc['documentType'],
                     'expires_at' => $this->expirationDate ? $this->expirationDate : null,
                     'file_path' => $path,
-                    'customer_id' => $customer->id,
+                    'supplier_id' => $su->id,
                     'notes' => $doc['observation'],
                     'user_create_id' => auth()->user()->id
                 ]);
 
             }
-
-            CustomerAddress::create([
-                'neighborhood_id' => $this->neighborhood,
-                'street' => $this->street,
-                'number' => $this->streetNumber,
-                'customer_id' => $customer->id,
-                'reference' => $this->reference,
-                'user_create_id' => auth()->user()->id
-            ]);
-
             DB::commit();
+            $this->dispatch('updateComponent')->to(Suppliers::class);
             $this->clearFields();
 
-            redirect()->route('customer', $customer->id);
-
+            return $this->dispatch("cadastrado", [
+                "modal" => "#createSupplier",
+                "title" => "Sucesso!",
+                "icon" => "success",
+                "text" => "Fornecedor cadastrado com sucesso."
+            ]);
+            
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
+            $this->clearFields();
+            return $this->dispatch("cadastrado", [
+                "modal" => "#createSupplier",
+                "title" => "Falha!",
+                "icon" => "error",
+                "text" => "Falha ao cadastrar fornecedor, tenta novamente mais tarde."
+            ]);
         }
     }
 
 
     private function clearFields(): void
     {
-        $this->reset(['typeCustomer', 'name', 'nuit', 'phone', 'secondaryPhone', 'email']);
+        $this->step = 1;
+        $this->reset([ 'name', 'nuit', 'phone', 'secondaryPhone', 'email', 'address']);
         $this->reset(['documentType', 'expirationDate', 'file', 'observation']);
-        $this->reset(['neighborhood', 'street', 'streetNumber', 'reference']);
         $this->reset('documents');
     }
 }

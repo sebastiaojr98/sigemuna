@@ -11,20 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('suppliers', function (Blueprint $table) {
+        Schema::create('supplier_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('secondary_phone')->nullable();
-            $table->string('address')->nullable();
-            $table->string('nuit')->nullable();
+            $table->bigInteger("document_type_id")->unsigned();
+            $table->string('file_path');
+            $table->date('expires_at')->nullable();
             $table->text('notes')->nullable();
-            $table->enum('status', ['Activo', 'Inactivo'])->default('Activo');
+            $table->unsignedBigInteger('supplier_id');
             $table->unsignedBigInteger("user_create_id");
             $table->timestamps();
-
-
+            
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('cascade');
+            $table->foreign('document_type_id')->references('id')->on('document_types');
             $table->foreign('user_create_id')->references('id')->on('users');
         });
     }
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suppliers');
+        Schema::dropIfExists('supplier_documents');
     }
 };

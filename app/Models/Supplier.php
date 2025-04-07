@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Supplier extends Model
 {
@@ -17,6 +18,12 @@ class Supplier extends Model
         'address',
         'nuit',
         'notes',
+        'user_create_id',
         'status',
     ];
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(SupplierDocument::class, "supplier_id", "id");
+    }
 }

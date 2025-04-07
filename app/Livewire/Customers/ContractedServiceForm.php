@@ -123,7 +123,6 @@ class ContractedServiceForm extends Component
 
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
             $this->clearFields();
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",

@@ -149,6 +149,18 @@
                                   </a><!-- more inner pages-->
                                 </li>
 
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("suppliers")" href="{{route("suppliers")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Fornecedores</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("expenses")" href="{{route("accounts-receivable")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contas a pagar</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
                                   @can('view expense report')
                                     <li class="nav-item">
                                       <a class="nav-link  @yield("expenses")" href="{{route("expenses")}}">
@@ -156,17 +168,8 @@
                                       </a><!-- more inner pages-->
                                     </li>
                                   @endcan
-                                  @can('view revenue report')
-                                    <li class="nav-item">
-                                      <a class="nav-link @yield("revenues")" href="{{--route("revenues")--}}">
-                                        <div class="d-flex align-items-center">
-                                          <span class="nav-link-text ps-1">Receitas Internas</span>
-                                        </div>
-                                      </a><!-- more inner pages-->
-                                    </li>
-                                  @endcan
           
-                                  @can('view financing report')
+                                  {{--@can('view financing report')
                                     <li class="nav-item">
                                       <a class="nav-link @yield("financings")" href="{{route("financings")}}">
                                         <div class="d-flex align-items-center">
@@ -184,11 +187,11 @@
                                         </div>
                                       </a><!-- more inner pages-->
                                     </li>
-                                  @endcan
+                                  @endcan--}}
                               </ul>
                             @endcan
 
-                            @can('view financial partners')
+                            {{--@can('view financial partners')
                               <a class="nav-link dropdown-indicator" href="#financialPartners" role="button" data-bs-toggle="collapse" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                   <span class="nav-link-icon"><span class="fas fa-university"></span></span><span class="nav-link-text ps-1">Parceiros Financeiros</span>
@@ -214,7 +217,7 @@
                                     </li>
                                   @endcan
                               </ul>
-                            @endcan
+                            @endcan--}}
                           </li>
                         </ul>
                       </div>

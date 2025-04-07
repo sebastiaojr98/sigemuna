@@ -33,6 +33,7 @@ use App\Livewire\Customers\Customers;
 use App\Livewire\Finances\AccountsReceivable;
 use App\Livewire\Finances\Invoices;
 use App\Livewire\Finances\Receipts;
+use App\Livewire\Suppliers\Suppliers;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,6 +68,8 @@ Route::get("customers/{customer}", Customer::class)->middleware(["auth"])->name(
 Route::get('licenses', AppLicenses::class)->name("licenses");
 Route::get('invoices', Invoices::class)->name('invoices');
 Route::get('receipts', Receipts::class)->name('receipts');
+
+Route::get("suppliers", Suppliers::class)->name("suppliers");
 
 //Financas contas a receber
 Route::get("accounts-receivable", AccountsReceivable::class)->middleware(["auth", 'permission:view accounts receivable'])->name("accounts-receivable");
