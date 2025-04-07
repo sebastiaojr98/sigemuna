@@ -40,6 +40,8 @@ class PermissionSeeder extends Seeder
             ['id' => 24, 'name' => 'view employee report', 'guard_name' => 'web', 'created_at' => '2023-11-16 21:14:27', 'updated_at' => '2023-11-16 21:14:27'],
             ['id' => 25, 'name' => 'create employee', 'guard_name' => 'web', 'created_at' => '2023-11-16 21:14:43', 'updated_at' => '2023-11-16 21:14:43'],
             ['id' => 28, 'name' => 'update employee', 'guard_name' => 'web', 'created_at' => '2023-11-16 22:57:47', 'updated_at' => '2023-11-16 22:57:47'],
+            ['id' => 29, 'name' => 'view accounts receivable', 'guard_name' => 'web', 'created_at' => '2023-11-16 22:57:47', 'updated_at' => '2023-11-16 22:57:47'],
+            ['id' => 30, 'name' => 'pay accounts receivable', 'guard_name' => 'web', 'created_at' => '2023-11-16 22:57:47', 'updated_at' => '2023-11-16 22:57:47'],
         ];
 
         DB::table('permissions')->insert($permissions);

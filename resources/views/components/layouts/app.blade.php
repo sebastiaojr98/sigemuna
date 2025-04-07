@@ -103,6 +103,7 @@
                                 <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Funcionários</span></div>
                               </a>
                             @endcan
+
                             @can('view infrastructure report')
                               <a class="nav-link @yield('infrastructures')" href="{{route("infrastructures")}}" role="button">
                                 <div class="d-flex align-items-center">
@@ -110,11 +111,17 @@
                                 </div>
                               </a>
                             @endcan
+
                             @can('view customer report')
                               <a class="nav-link @yield("clients")" href="{{route("customers")}}" role="button">
                                   <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-user-friends"></span></span><span class="nav-link-text ps-1">Clientes</span></div>
                               </a>
                             @endcan
+
+                            <a class="nav-link @yield("licenses")" href="{{route("licenses")}}" role="button">
+                                  <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-receipt"></span></span><span class="nav-link-text ps-1">Licenças</span></div>
+                            </a>
+
                             @can('view financial report')
                               <a class="nav-link dropdown-indicator" href="#finances" role="button" data-bs-toggle="collapse" aria-expanded="false">
                                   <div class="d-flex align-items-center">
@@ -122,6 +129,14 @@
                                   </div>
                               </a>
                               <ul class="nav collapse show" id="finances">
+                                @can('view accounts receivable')
+                                  <li class="nav-item">
+                                    <a class="nav-link  @yield("expenses")" href="{{route("accounts-receivable")}}">
+                                      <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contas a receber</span></div>
+                                    </a><!-- more inner pages-->
+                                  </li>
+                                @endcan
+
                                   @can('view expense report')
                                     <li class="nav-item">
                                       <a class="nav-link  @yield("expenses")" href="{{route("expenses")}}">

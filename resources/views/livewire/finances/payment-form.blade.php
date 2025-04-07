@@ -35,7 +35,9 @@
         @error('file') <small class="alert-error"> {{ $message }} </small> @enderror
     </div>
 
-    <div class="col-12">
-      <button class="btn btn-success my-3 form-control" type="submit" wire:click='pay()'>Processar</button>
-    </div>
+    @can('pay accounts receivable')
+        <div class="col-12">
+            <button class="btn btn-success my-3 form-control" type="submit" wire:click='pay()'>Processar</button>
+        </div>   
+    @endcan
 </div>

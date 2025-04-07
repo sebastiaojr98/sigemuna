@@ -1,4 +1,4 @@
-@section('clients') active @endsection
+@section('licenses') active @endsection
 
 <div>
     <div class="row mb-3 g-3">
@@ -8,24 +8,9 @@
             <div class="card-body">
                 <div class="row justify-content-between align-items-center">
                     <div class="col-5">
-                        <h1 class="h3 text-primary">Contas a Receber</h1>
+                        <h1 class="h3 text-primary">Licenças</h1>
                     </div>
-                    <div class="col-7">
-                        <div class="row justify-content-between align-items-center"">
-                            <div class="d-flex col-6 align-items-center">
-                                <h5 class="me-3">Filtro: </h5>
-                                <select class="from form-control" wire:model='filter'>
-                                    <option value="">escolha...</option>
-                                    @foreach ($filters as $filter)
-                                        <option value="{{$filter}}">{{$filter}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" class="form form-control col-8" placeholder="escreva o(a) " wire:keyup="search($event.target.value)">
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-7"></div>
                 </div>
                 <hr>
                 <div class="row">
@@ -42,8 +27,8 @@
                                             <i class="fa fa-coins text-warning" style="font-size: 25pt;"></i>
                                         </div>
                                         <div class="col-8 text-center" style="font-size: 11pt;">
-                                            <span><strong>Pendente</strong></span><br>
-                                            <span>{{$pending}}</span>
+                                            <span><strong>Não impressas</strong></span><br>
+                                            <span>{{$report->notPrinted}}</span>
                                         </div>  
                                     </div>
                                     
@@ -59,8 +44,8 @@
                                             <i class="fa fa-file-invoice-dollar text-primary" style="font-size: 25pt;"></i>
                                         </div>
                                         <div class="col-8 text-center" style="font-size: 11pt;">
-                                            <span><strong>A receber</strong></span><br>
-                                            <span>MT {{formatAmount($toReceive)}}</span>
+                                            <span><strong>Não assinadas</strong></span><br>
+                                            <span>{{$report->notSigned}}</span>
                                         </div>  
                                     </div>
                                     
@@ -77,7 +62,7 @@
                                         </div>
                                         <div class="col-8 text-center text-danger" style="font-size: 11pt;">
                                             <span><strong>Vencidas</strong></span><br>
-                                            <span>{{$expired}}</span>
+                                            <span>{{$report->expired}}</span>
                                         </div>  
                                     </div>
                                     
@@ -92,61 +77,47 @@
                     <table class="table table-striped table-sms">
                       <thead>
                         <tr class="btn-reveal-trigger">
+                            <th scope="col"  style="font-size: 11pt;">Código</th>
+                            <th scope="col"  style="font-size: 11pt;">Licença</th>
                             <th scope="col"  style="font-size: 11pt;">Cliente</th>
-                            <th scope="col"  style="font-size: 11pt;">Factura</th>
-                            <th scope="col"  style="font-size: 11pt;">Valor (MT)</th>
-                            <th scope="col"  style="font-size: 11pt;">Pago (MT)</th>
+                            <th scope="col"  style="font-size: 11pt;" class="text-center">Impressa</th>
+                            <th scope="col"  style="font-size: 11pt;" class="text-center">Assinada</th>
                             <th scope="col"  style="font-size: 11pt;" class="text-center">Estado</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">Vencimento</th>
-                            <th scope="col"  style="font-size: 11pt;" class="text-center">Recibos</th>
                             <th scope="col"  style="font-size: 11pt;" class="text-center">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
-                        @forelse ($accountsReceivable as $accountR)
+                        @forelse ($licenses as $license)
                         <tr class="btn-reveal-trigger">
-                            <td style="font-size: 10pt;">{{$accountR->customer->name}}</td>
-                            <td style="font-size: 10pt;">{{$accountR->invoice_number}}</td>
-                            <td style="font-size: 10pt;">{{formatAmount($accountR->amount_due)}}</td>
-                            <td style="font-size: 10pt;">{{formatAmount($accountR->amount_paid)}}</td>
+                            <td style="font-size: 10pt;">{{$license->code}}</td>
+                            <td style="font-size: 10pt;">{{$license->serviceContracted->service->name}}</td>
+                            <td style="font-size: 10pt;">{{$license->customer->name}}</td>
+                            <td style="font-size: 10pt;" class="text-center">{{$license->printed}}</td>
+                            <td style="font-size: 10pt;" class="text-center">{{$license->signed}}</td>
                             <td style="font-size: 10pt;" class="text-center">
-                                @if ($accountR->status == "Pendente")
-                                    <span class="badge bg-warning">Pendente</span>
-                                @elseif($accountR->status == "Parcialmente pago")
-                                    <span class="badge bg-primary">Parcialmente pago</span>
+                                @if ($license->status == "Emitida")
+                                    <span class="badge bg-success">Activa</span>
+                                @elseif($license->status == "Expirada")
+                                    <span class="badge bg-warning">Expirada</span>
                                 @else
-                                    <span class="badge bg-success">Pago</span>
+                                    <span class="badge bg-danger">Cancelada</span>
                                 @endif
 
                             </td>
+
+                            
                             <td style="font-size: 10pt;" class="text-center">
-                                @if ($accountR->status == "Pago")
-                                    -
-                                @else
-                                    {{date('d-m-Y', strtotime($accountR->due_date))}}                                    
+                                <button class="btn btn-secondary btn-sm" wire:click='print({{$license->id}})'>
+                                    <i class="fa fa-print"></i>
+                                </button>
+
+                                @if($license->signed === "Não")
+                                    <button class="btn btn-primary btn-sm" wire:click='subscribe({{$license->id}})'>
+                                        <i class="fa fa-check"></i>
+                                    </button>
                                 @endif
                             </td>
-                            <td style="font-size: 10pt;" class="text-center">
-                                
-                                @forelse ($accountR->receipts as $receipt)
-                                    <a target="_blank" href="#"><i class="fa fa-file-pdf text-danger"></i></a>
-                                @empty
-                                    -
-                                @endforelse
-
-                            </td>
-                            <td style="font-size: 10pt;" class="text-center">
-                                @if ($accountR->status != "Pago")
-                                    @can('pay accounts receivable')
-                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountReceivable({{$accountR}})'>
-                                            <i class="fa fa-check"></i>
-                                        </button>
-                                    @endcan
-                                @else
-                                    -
-                                @endif
-                            </td>
-
+                            
                         </tr>
                         @empty
                             <tr>
@@ -156,7 +127,7 @@
                       </tbody>
                     </table>
                     <div>
-                      {{$accountsReceivable->links()}}
+                      {{$licenses->links()}}
                     </div>                          
                   </div>
                   
@@ -181,7 +152,7 @@
               <div class="px-4 py-3">
 
 
-                <livewire:finances.payment-form/>
+                {{--<livewire:finances.payment-form/>--}}
 
               </div>
             </div>
