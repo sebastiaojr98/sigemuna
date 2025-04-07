@@ -35,4 +35,9 @@ class Receipt extends Model
     {
         return $this->belongsTo(AccountReceivable::class, 'account_receivable_id', 'id');
     }
+
+    public function userCreated(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_create_id', 'id');
+    }
 }

@@ -137,6 +137,18 @@
                                   </li>
                                 @endcan
 
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("invoices")" href="{{route("invoices")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Facturas</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("receipts")" href="{{route("receipts")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Recibos</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
                                   @can('view expense report')
                                     <li class="nav-item">
                                       <a class="nav-link  @yield("expenses")" href="{{route("expenses")}}">

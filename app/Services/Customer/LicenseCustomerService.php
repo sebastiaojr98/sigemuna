@@ -29,8 +29,8 @@ use App\Models\License;
                     'code' => 'LIC-'.date('Y/m/').self::getCode(),
                     'service_contracted_id' => $serviceContractedID,
                     'customer_id' => $customerID,
-                    'house_number' => $houseNumber,
-                    'block' => $block,
+                    'house_number' => $houseNumber ? $houseNumber : null,
+                    'block' => $block ? $block : null,
                     'communal_unit_id' => $communalUnitID,
                 ]);
             }catch(\Exception $e){
