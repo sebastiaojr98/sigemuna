@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Finances;
 
+use App\Models\Invoice;
 use App\Models\Receipt;
-use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class Dashboard extends Component
 {
@@ -124,12 +125,18 @@ class Dashboard extends Component
             ->limit(5)
             ->get();
 
+        $facturasMaisRecentes = Invoice::with(['customer', 'accountsReceivable'])
+            ->orderByDesc('created_at') // Ordena pela data de criação da fatura, do mais recente
+            ->limit(10) // Limita aos 10 primeiros resultados
+            ->get();
+
         return view('livewire.finances.dashboard')->with([
             'totalReceber' => $totalReceber,
             'totalPagar' => $totalPagar,
             'totalAtrasado' => $totalAtrasado,
             'saldoAtual' => $saldoAtual,
-            'recibosDeHoje' => $recibosDeHoje
+            'recibosDeHoje' => $recibosDeHoje,
+            'facturasMaisRecentes' => $facturasMaisRecentes
         ]);
     }
 }

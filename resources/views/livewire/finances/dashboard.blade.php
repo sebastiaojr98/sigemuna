@@ -131,14 +131,14 @@
           </div>
 
           <div class="col-7"></div>
-          <div class="col-5" style="margin-top: -50px !important">
+          <div class="col-5" style="margin-top: -110px !important">
             <div class="card" style="height: 40vh !important">
               <div class="card-header">
                 <h5 class="mb-0">Facturas Recentes</h5>
               </div>
               <div class="card-body scrollbar recent-activity-body-height ps-2">
 
-                @foreach ($recibosDeHoje as $recibo)
+                @foreach ($facturasMaisRecentes as $facturas)
                   <div class="row g-3 timeline timeline-primary timeline-past pb-x1">
                     <div class="col-auto ps-4 ms-2">
                       <div class="ps-2">
@@ -148,9 +148,11 @@
                     <div class="col">
                       <div class="row gx-0 border-bottom pb-x1">
                         <div class="col">
-                          <h6 class="text-800 mb-1">Factura: {{ $recibo->invoice->number }}</h6>
-                          <p class="fs--1 text-600 mb-0 text-justify">Montante: {{formatAmount($recibo->amount_paid)}} MT</p>
-                          <p class="fs--1 text-600 mb-0">Operador: {{$recibo->userCreated->name}}</p>
+                          <h6 class="text-800 mb-1">Factura: {{ $facturas->number }}</h6>
+                          <p class="fs--1 text-600 mb-0 text-justify">Montante: {{formatAmount($facturas->total_amount)}} MT</p>
+                          <p class="fs--1 text-600 mb-0 text-justify">Serviço: {{$facturas->serviceContracted->service->name}}</p>
+                          <p class="fs--1 text-600 mb-0 text-justify">Cliente: {{$facturas->customer->name}}</p>
+                          <small class="text-400 mb-0">Operador: {{$recibo->userCreated->name}}</small>
                         </div>
                       </div>
                     </div>
@@ -183,7 +185,7 @@
         ],
           chart: {
           type: 'area',
-          height: 250
+          height: 300
         },
         plotOptions: {
           bar: {
