@@ -26,4 +26,9 @@ class Supplier extends Model
     {
         return $this->hasMany(SupplierDocument::class, "supplier_id", "id");
     }
+
+    public function accountsPayable(): HasMany
+    {
+        return $this->hasMany(AccountPayable::class, 'supplier_id', 'id');
+    }
 }

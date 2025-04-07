@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Finances;
 
-use App\Models\AccountReceivable;
-use App\Models\Customer;
-use App\Models\PaymentMethod;
-use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\WithPagination;
+use App\Models\Customer;
+use Illuminate\View\View;
 use Livewire\Attributes\On;
+use Livewire\WithPagination;
+use App\Models\PaymentMethod;
+use App\Models\AccountReceivable;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class AccountsReceivable extends Component
 {
@@ -50,7 +51,7 @@ class AccountsReceivable extends Component
                 ->orderBy('created_at', 'desc')
                 ->paginate(5);
             else:
-                $accountsReceivable = [];
+                $accountsReceivable = new LengthAwarePaginator([], 0, 3, null, []);;
             endif;
         endif;
         

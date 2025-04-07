@@ -48,7 +48,7 @@ class ExpenseRegistrationForm extends Component
         $this->validate([
             'category' => 'required|exists:expense_categories,id',
             'supplier' => 'required|exists:suppliers,id',
-            'amount' => 'required|decimal:2',
+            'amount' => 'required|numeric|min:1',
             'startDate' => 'required|date',
             'isRecurring' => ['required', Rule::in(['Sim', 'Não'])],
             'frequency' => 'nullable|max:10',

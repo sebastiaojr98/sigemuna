@@ -39,11 +39,11 @@
                                 <div class="card-body position-relative">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-4">
-                                            <i class="fa fa-coins text-warning" style="font-size: 25pt;"></i>
+                                            <i class="fa fa-file-invoice-dollar text-warning" style="font-size: 25pt;"></i>
                                         </div>
                                         <div class="col-8 text-center" style="font-size: 11pt;">
                                             <span><strong>Pendente</strong></span><br>
-                                            <span>{{--$pending--}}</span>
+                                            <span>{{$relatories->pending}}</span>
                                         </div>  
                                     </div>
                                     
@@ -56,28 +56,28 @@
                                 <div class="card-body position-relative">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-4">
-                                            <i class="fa fa-file-invoice-dollar text-primary" style="font-size: 25pt;"></i>
-                                        </div>
-                                        <div class="col-8 text-center" style="font-size: 11pt;">
-                                            <span><strong>A pagar</strong></span><br>
-                                            <span>MT {{--formatAmount($toReceive)--}}</span>
-                                        </div>  
-                                    </div>
-                                    
-                                </div>
-                                </div>
-                            </a>
-                            <a style="text-decoration: none" href="#" class="col-4">
-                                <div class="card overflow-hidden" style="min-width: 12rem">
-                                <div class="bg-holder bg-card" style="background-image:url({{asset('assets/img/icons/spot-illustrations/corner-2.png')}});"></div>
-                                <div class="card-body position-relative">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-4">
-                                            <i class="fa fa-receipt text-danger" style="font-size: 25pt;"></i>
+                                            <i class="fa fa-file-invoice-dollar text-danger" style="font-size: 25pt;"></i>
                                         </div>
                                         <div class="col-8 text-center text-danger" style="font-size: 11pt;">
-                                            <span><strong>Vencidas</strong></span><br>
-                                            <span>{{--$expired--}}</span>
+                                            <span><strong>Divida</strong></span><br>
+                                            <span>MT {{formatAmount($relatories->to_pay)}}</span>
+                                        </div>  
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </a>
+                            <a style="text-decoration: none" href="#" class="col-4">
+                                <div class="card overflow-hidden" style="min-width: 12rem">
+                                <div class="bg-holder bg-card" style="background-image:url({{asset('assets/img/icons/spot-illustrations/corner-2.png')}});"></div>
+                                <div class="card-body position-relative">
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-4">
+                                            <i class="fa fa-file-invoice text-danger" style="font-size: 25pt;"></i>
+                                        </div>
+                                        <div class="col-8 text-center text-danger" style="font-size: 11pt;">
+                                            <span><strong>Atrasadas</strong></span><br>
+                                            <span>{{$relatories->expired}}</span>
                                         </div>  
                                     </div>
                                     
