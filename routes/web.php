@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthOtpController;
 use App\Livewire\Login;
 use App\Livewire\Client;
 use App\Livewire\Clients;
@@ -37,8 +38,9 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Finances\AccountsPayable;
 use App\Livewire\App\Licenses as AppLicenses;
 use App\Livewire\Finances\AccountsReceivable;
-use App\Livewire\Finances\Dashboard as FinancesDashboard;
 use App\Livewire\Finances\Expenses as FinancesExpenses;
+use App\Livewire\Finances\Dashboard as FinancesDashboard;
+use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 /*
     Rotas do Sistema
@@ -47,13 +49,20 @@ use App\Livewire\Finances\Expenses as FinancesExpenses;
 /*
     Rotas de Autenticacao
 **/
-Route::get("/", Login::class)->name('login')->middleware(['guest'/*, 'throttle:8,5'*/]);
+//Route::get("/", Login::class)->name('login')->middleware(['guest'/*, 'throttle:8,5'*/]);
 
+Route::post('/login', [CustomAuthenticatedSessionController::class, 'store'])
+    ->middleware(['guest'])
+    ->name('login');
+
+Route::get('verify-otp', [AuthOtpController::class, 'index'])->middleware(['auth'])->name('verify-otp');
+Route::post('verify-otp', [AuthOtpController::class, 'verify'])->middleware(['auth'])->name('verify-otp');
 /*
     Rota de dasahboard
 **/
 Route::middleware([
-    'auth'
+    'auth',
+    '2fa'
 ])->prefix("dashboard")->group(function(){
     //Route::get("/home", Dashboard::class)->name("dashboard-home");
     //Route::get("/employees", DashboardEmployees::class)->name("dashboard-employees");
