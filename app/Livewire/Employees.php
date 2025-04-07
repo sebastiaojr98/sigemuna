@@ -55,9 +55,9 @@ class Employees extends Component
     public function render()
     {
         if ($this->search_employee):
-            $this->employees = Employee::with(["gender"])->orWhere("code", "LIKE", "%{$this->search_employee}%")->orWhere("first_name", "LIKE", "%{$this->search_employee}%")->orWhere("last_name", "LIKE", "%{$this->search_employee}%")->orWhere("nuit", "LIKE", "%{$this->search_employee}%")->paginate(4);
+            $this->employees = Employee::with(["gender", 'maritalStatus'])->orWhere("code", "LIKE", "%{$this->search_employee}%")->orWhere("first_name", "LIKE", "%{$this->search_employee}%")->orWhere("last_name", "LIKE", "%{$this->search_employee}%")->orWhere("nuit", "LIKE", "%{$this->search_employee}%")->paginate(4);
         else:
-            $this->employees = Employee::with(["gender"])->paginate(4);
+            $this->employees = Employee::with(["gender", 'maritalStatus'])->paginate(4);
         endif;
 
         $departments = Department::all();
@@ -74,7 +74,6 @@ class Employees extends Component
 
         return view('livewire.employees')->with(["employees" => $this->employees, "departments" => $departments, "genders" => $genders, "statuses" => $statuses]);
     }
-
 
     public function generateReport()
     {

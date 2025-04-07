@@ -1,3 +1,5 @@
+@section('clients') active @endsection
+
 <div>
         <div class="card mb-3">
           <div class="card-body row d-flex align-items-center">

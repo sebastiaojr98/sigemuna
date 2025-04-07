@@ -1,8 +1,7 @@
 @section('employees') active @endsection
 <div>
     <div class="row mb-3 g-3">
-        
-        <div class="col-lg-9 col-xxl-7">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -59,11 +58,12 @@
                         <table class="table table-striped table-sms">
                           <thead>
                             <tr class="btn-reveal-trigger">
-                                <th scope="col">Código</th>
+                                <th scope="col">Processo</th>
                                 <th scope="col">NUIT</th>
                                 <th scope="col">Nome</th>
                                 <th scope="col">Nascimento</th>
                                 <th scope="col">Sexo</th>
+                                <th scope="col">Estado Civil</th>
                                 <th scope="col" class="text-center">Ação</th>
                             </tr>
                           </thead>
@@ -75,6 +75,7 @@
                               <td style="font-size: 10pt;">{{$employee->first_name}} {{$employee->last_name}}</td>
                               <td style="font-size: 10pt;">{{$employee->birth}}</td>
                               <td style="font-size: 10pt;">{{$employee->gender->description}}</td>
+                              <td style="font-size: 10pt;">{{$employee->maritalStatus->description}}</td>
                               <td style="font-size: 10pt;" class="text-center">
                                   @can('create employee')
                                     <a href="{{route("employee", $employee->id)}}" class="btn btn-primary btn-sm px-4">
@@ -97,7 +98,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-5">
+        
+        {{--<div class="col-xxl-5">
           <div class="card">
             <div class="card-header d-flex flex-between-center py-2 border-bottom">
               <h6 class="mb-0">Analise grafica por estado</h6>
@@ -113,7 +115,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>--}}
     </div>
 
     {{-- MODAL DE CADASTRO DE FUNCIONARIOS --}}

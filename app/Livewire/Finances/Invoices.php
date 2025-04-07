@@ -3,6 +3,7 @@
 namespace App\Livewire\Finances;
 
 use App\Models\Invoice;
+use App\Services\Pdf\DomPdfService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -23,6 +24,12 @@ class Invoices extends Component
 
     public function print(Invoice $invoice)
     {
-        
+        try {
+            $data = view('relatories.invoice')->render();
+            
+            return DomPdfService::make($data, "invoices/files");
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }
