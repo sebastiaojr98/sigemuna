@@ -97,15 +97,15 @@
                             <th scope="col"  style="font-size: 11pt;">Valor (MT)</th>
                             <th scope="col"  style="font-size: 11pt;">Pago (MT)</th>
                             <th scope="col"  style="font-size: 11pt;">Vencimento</th>
-                            <th scope="col"  style="font-size: 11pt;">Comprovativos</th>
-                            <th scope="col"  style="font-size: 11pt;">Estado</th>
+                            <th scope="col"  style="font-size: 11pt;" class="text-center">Comprovativos</th>
+                            <th scope="col"  style="font-size: 11pt;" class="text-center">Estado</th>
                             <th scope="col"  style="font-size: 11pt;">Ação</th>
                         </tr>
                       </thead>
                       <tbody>
                         @forelse ($accountsPayable as $ap)
                         <tr class="btn-reveal-trigger">
-                            <td style="font-size: 10pt;">{{$ap->expense->name}}</td>
+                            <td style="font-size: 10pt;">{{$ap->expense->category->name}}</td>
                             <td style="font-size: 10pt;">{{$ap->supplier->name}}</td>
                             <td style="font-size: 10pt;">{{formatAmount($ap->amount_due)}}</td>
                             <td style="font-size: 10pt;">{{formatAmount($ap->amount_paid)}}</td>
@@ -137,7 +137,7 @@
                             </td>
                             <td style="font-size: 10pt;" class="text-center">
                                 @if ($ap->status != "Pago")
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountReceivable({{$ap}})'>
+                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountPayable({{$ap->id}})'>
                                         <i class="fa fa-check"></i>
                                     </button>
                                 @else
@@ -179,7 +179,7 @@
               <div class="px-4 py-3">
 
 
-                <livewire:finances.payment-form/>
+                <livewire:finances.payment-supplier-form/>
 
               </div>
             </div>
