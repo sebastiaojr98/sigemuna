@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Support\SMS;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
@@ -23,9 +24,7 @@ class CustomAuthenticatedSessionController extends Controller
             // Gerar e enviar OTP
             $otp = rand(100000, 999999);
             Cache::put('otp_' . $user->id, $otp, now()->addMinutes(5));
-
-            //SMS::send($user->phone, "Seu código OTP é: $otp");
-
+            SMS::send($user->phone, "A senha temporaria e: $otp");
             session(['otp_sent' => true]);
 
             return redirect('/verify-otp');

@@ -33,15 +33,5 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function(){
             return view("auth.login");
         });
-
-        /*Fortify::authenticateUsing(function (Request $request) {
-            dd($request);
-            $user = User::where('email', $request->email)->first();
-     
-            if ($user &&
-                Hash::check($request->password, $user->password)) {
-                return $user;
-            }
-        });*/
     }
 }

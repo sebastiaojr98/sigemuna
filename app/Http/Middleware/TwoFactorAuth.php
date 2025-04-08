@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Support\SMS;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,9 @@ class TwoFactorAuth
         if (Auth::check() && !session('otp_verified')) {
             $otp = rand(100000, 999999);
             Cache::put('otp_' . auth()->id(), $otp, now()->addMinutes(5));
-            //SMS::send(auth()->user()->phone, "Seu código OTP: $otp");
+
+            SMS::send(auth()->user()->phone, "A senha temporaria e: $otp");
+
             session()->put('otp_sent', true);
 
             return redirect()->route('verify-otp');

@@ -27,7 +27,7 @@ class AuthOtpController extends Controller
             session()->put('otp_verified', true);
             session()->forget('otp_sent');
 
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/profile');
         }
 
         return back()->withErrors(['otp' => 'OTP inválido ou expirado']);
