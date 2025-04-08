@@ -32,6 +32,7 @@
           font-size: 8pt;
         }
         </style>
+        @stack('form-wizard')
     </head>
     <body>
         <div>
@@ -102,6 +103,7 @@
                                 <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-users"></span></span><span class="nav-link-text ps-1">Funcionários</span></div>
                               </a>
                             @endcan
+
                             @can('view infrastructure report')
                               <a class="nav-link @yield('infrastructures')" href="{{route("infrastructures")}}" role="button">
                                 <div class="d-flex align-items-center">
@@ -109,11 +111,17 @@
                                 </div>
                               </a>
                             @endcan
+
                             @can('view customer report')
-                              <a class="nav-link @yield("clients")" href="{{route("clients")}}" role="button">
+                              <a class="nav-link @yield("clients")" href="{{route("customers")}}" role="button">
                                   <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-user-friends"></span></span><span class="nav-link-text ps-1">Clientes</span></div>
                               </a>
                             @endcan
+
+                            <a class="nav-link @yield("licenses")" href="{{route("licenses")}}" role="button">
+                                  <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-receipt"></span></span><span class="nav-link-text ps-1">Licenças</span></div>
+                            </a>
+
                             @can('view financial report')
                               <a class="nav-link dropdown-indicator" href="#finances" role="button" data-bs-toggle="collapse" aria-expanded="false">
                                   <div class="d-flex align-items-center">
@@ -121,6 +129,38 @@
                                   </div>
                               </a>
                               <ul class="nav collapse show" id="finances">
+                                @can('view accounts receivable')
+                                  <li class="nav-item">
+                                    <a class="nav-link  @yield("accounts-receivable")" href="{{route("accounts-receivable")}}">
+                                      <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contas a receber</span></div>
+                                    </a><!-- more inner pages-->
+                                  </li>
+                                @endcan
+
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("invoices")" href="{{route("invoices")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Facturas</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("receipts")" href="{{route("receipts")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Recibos</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("suppliers")" href="{{route("suppliers")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Fornecedores</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item">
+                                  <a class="nav-link  @yield("accounts-payable")" href="{{route("accounts-payable")}}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-text ps-1">Contas a pagar</span></div>
+                                  </a><!-- more inner pages-->
+                                </li>
+
                                   @can('view expense report')
                                     <li class="nav-item">
                                       <a class="nav-link  @yield("expenses")" href="{{route("expenses")}}">
@@ -128,17 +168,8 @@
                                       </a><!-- more inner pages-->
                                     </li>
                                   @endcan
-                                  @can('view revenue report')
-                                    <li class="nav-item">
-                                      <a class="nav-link @yield("revenues")" href="{{route("revenues")}}">
-                                        <div class="d-flex align-items-center">
-                                          <span class="nav-link-text ps-1">Receitas Internas</span>
-                                        </div>
-                                      </a><!-- more inner pages-->
-                                    </li>
-                                  @endcan
           
-                                  @can('view financing report')
+                                  {{--@can('view financing report')
                                     <li class="nav-item">
                                       <a class="nav-link @yield("financings")" href="{{route("financings")}}">
                                         <div class="d-flex align-items-center">
@@ -156,11 +187,11 @@
                                         </div>
                                       </a><!-- more inner pages-->
                                     </li>
-                                  @endcan
+                                  @endcan--}}
                               </ul>
                             @endcan
 
-                            @can('view financial partners')
+                            {{--@can('view financial partners')
                               <a class="nav-link dropdown-indicator" href="#financialPartners" role="button" data-bs-toggle="collapse" aria-expanded="false">
                                 <div class="d-flex align-items-center">
                                   <span class="nav-link-icon"><span class="fas fa-university"></span></span><span class="nav-link-text ps-1">Parceiros Financeiros</span>
@@ -186,64 +217,7 @@
                                     </li>
                                   @endcan
                               </ul>
-                            @endcan
-
-                            @can('view addresses')
-                              <a class="nav-link dropdown-indicator" href="#address" role="button" data-bs-toggle="collapse" aria-expanded="false">
-                                <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-map-marker-alt"></span></span><span class="nav-link-text ps-1">Endereços</span></div>
-                              </a>
-                              <ul class="nav collapse show" id="address">
-                                <li class="nav-item">
-                                  <a class="nav-link @yield('administrativePosts')" href="{{route("administrative-posts")}}">
-                                    <div class="d-flex align-items-center">
-                                      <span class="nav-link-text ps-1">Postos Administrativos</span>
-                                    </div>
-                                  </a><!-- more inner pages-->
-                                </li>
-                                <li class="nav-item">
-                                  <a class="nav-link @yield("neighborhoods")" href="{{route("neighborhoods")}}">
-                                    <div class="d-flex align-items-center">
-                                      <span class="nav-link-text ps-1">Bairros</span>
-                                    </div>
-                                  </a><!-- more inner pages-->
-                                </li>
-                                <li class="nav-item">
-                                  <a class="nav-link @yield("communal-units")" href="{{route("communal-units")}}">
-                                    <div class="d-flex align-items-center">
-                                      <span class="nav-link-text ps-1">Unidades Comunais</span>
-                                    </div>
-                                  </a><!-- more inner pages-->
-                                </li>
-                              </ul>
-                            @endcan
-
-                            @can('view activities')
-                              <a class="nav-link dropdown-indicator" href="#activity" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="email">
-                                  <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-cogs"></span></span><span class="nav-link-text ps-1">Atividades</span></div>
-                              </a>
-                              <ul class="nav collapse show" id="activity">
-                                  <li class="nav-item">
-                                    <a class="nav-link @yield("services")" href="{{route("services")}}">
-                                      <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Serviços</span>
-                                      </div>
-                                    </a><!-- more inner pages-->
-                                    <a class="nav-link @yield("sub-services")" href="{{route("sub-services")}}">
-                                      <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Sub Serviços</span>
-                                      </div>
-
-                                    <a class="nav-link @yield("licenses")" href="{{route("licenses")}}">
-                                      <div class="d-flex align-items-center">
-                                        <span class="nav-link-text ps-1">Licenças</span>
-                                      </div>
-                                    </a><!-- more inner pages-->
-                                  </li>
-                              </ul>
-                            @endcan
-                            {{--<a class="nav-link @yield('complaints')" href="{{route("complaints")}}" role="button">
-                              <div class="d-flex align-items-center"><span class="nav-link-icon"><span class="fas fa-list"></span></span><span class="nav-link-text ps-1">Reclamações</span></div>
-                            </a>--}}
+                            @endcan--}}
                           </li>
                         </ul>
                       </div>
@@ -487,25 +461,16 @@
           //Swall de Pagamento pelos servicos
             window.document.addEventListener("pagamento", (event) => {
               
+              $(`${event.__livewire.params[0].modal}`).modal("hide");
+
               Swal.fire({
                 title: `${event.__livewire.params[0].title}`,
                 text: `${event.__livewire.params[0].text}`,
                 icon: `${event.__livewire.params[0].icon}`,
-                timer: 5000,
-                timerProgressBar: true,
-                showConfirmButton: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Fechar',
                 customClass: {
                   confirmButton: 'btn btn-primary px-4', // Adicione a classe do Bootstrap para botão de sucesso
-                },
-                didOpen: () => {
-                  Swal.showLoading();
-                  const timer = Swal.getPopup().querySelector("b");
-                  timerInterval = setInterval(() => {
-                    timer.textContent = `${Swal.getTimerLeft()}`;
-                  }, 5000);
-                },
-                willClose: () => {
-                  clearInterval(timerInterval);
                 }
               });
             });

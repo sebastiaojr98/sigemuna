@@ -9,12 +9,18 @@ class Service extends Model
 {
     use HasFactory;
 
-    protected $fillable =[
-        "name",
+    protected $fillable = [
+        'code',
+        'name',
+        'category_id',
+        'description',
+        'base_price',
+        'billing_type',
+        'status',
     ];
 
-    public function subServices(){
-        return $this->hasMany(SubService::class);
+    public function category()
+    {
+        return $this->belongsTo(ServiceCategory::class, 'category_id');
     }
-
 }

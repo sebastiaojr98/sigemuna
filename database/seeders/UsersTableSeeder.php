@@ -30,10 +30,7 @@ class UsersTableSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'phone' => '+258833517323',
                 'role' => 'Software Engenier',
-                'biography' => 'Minha Biografia',
-                'picture' => null,
-                'created_at' => '2023-11-21 08:45:22',
-                'updated_at' => '2025-03-28 03:13:06',
+                'biography' => 'Minha Biografia'
             ),
         ));
         

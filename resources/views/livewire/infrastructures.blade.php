@@ -1,7 +1,7 @@
 @section('infrastructures') active @endsection
 <div>
     <div class="row mb-3 g-3">
-        <div class="col-lg-12 col-xxl-8">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
@@ -15,7 +15,7 @@
                         </form>
                     </div>
                     <hr>
-                    <form class="row align-items-center mr-2" wire:submit="printReport()">
+                    <form class="row col-8 align-items-center mr-2" wire:submit="printReport()">
                         <div class="form-group col-4">
                             <label for="">Tipo</label>
                             <select name="" id="" class="form-control" wire:model="type" required>
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xxl-4">
+        {{--<div class="col-xxl-4">
           <div class="card">
             <div class="card-header d-flex flex-between-center py-2 border-bottom">
               <h6 class="mb-0">Analise grafica de Infraestrutras</h6>
@@ -116,7 +116,7 @@
             </div>
             <div class="card-footer"></div>
           </div>
-        </div>
+        </div>--}}
         
     </div>
 

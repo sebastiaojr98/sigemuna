@@ -2,9 +2,6 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\AccountType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,14 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeContactSeeder::class);
         $this->call(DepartmentSeeder::class);
         $this->call(PositionCompanySeeder::class);
-        $this->call(AccountTypeSeeder::class);
         $this->call(ServiceSeeder::class);
-        $this->call(SubServiceSeeder::class);
-        $this->call(LicenseTypeSeeder::class);
-        $this->call(LicenseStatusSeeder::class);
-        $this->call(FormPaymentSeeder::class);
-        $this->call(TypeRevenueSeeder::class);
-        $this->call(TypeExpenseSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
         $this->call(FinancierTypeSeeder::class);
         $this->call(TypeInvestorSeeder::class);
         $this->call(InfrastructureTypeSeeder::class);
@@ -44,5 +35,8 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
         $this->call(ModelHasRoleSeeder::class);
         $this->call(RoleHasPermissionSeeder::class);
+        $this->call(ServiceCategorySeeder::class);
+        $this->call(ServiceSeeder::class);
+        $this->call(ExpenseCategorySeeder::class);
     }
 }

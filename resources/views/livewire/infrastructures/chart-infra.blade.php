@@ -9,7 +9,7 @@
       type: 'donut',
     },
     series: {{$data}},
-    labels: ['Todos', 'Funcionamento', 'Manutenção', 'Encerrada']
+    labels: ['Funcionamento', 'Manutenção', 'Encerrada']
   };
 
   var chart = new ApexCharts(document.querySelector("#chart-infras"), options);

@@ -4,6 +4,10 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/app/invoices/*
+/storage/app/receipts/*
+/storage/app/public/*
+/public/qrcodes_licenses
 /vendor
 .env
 .env.backup
