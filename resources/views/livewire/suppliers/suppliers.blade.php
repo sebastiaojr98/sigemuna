@@ -35,9 +35,11 @@
                         </button>--}}
                     </div>
                     <div class="mt-4">
-                        <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createSupplier">
-                            <i class="fas fa-user-plus"></i> Novo
-                        </button>
+                        @can('register supplier')
+                            <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createSupplier">
+                                <i class="fas fa-user-plus"></i> Novo
+                            </button>
+                        @endcan
                     </div>
                 </div>
                 <hr>
@@ -71,13 +73,21 @@
                             </td>
                             <td class="text-center">
                                 @if($supplier->status ==  "Activo")
-                                    <button class="btn btn-warning btn-sm" wire:click='disableSupplier({{$supplier->id}})'>
-                                        <i class="fa fa-ban"></i>
-                                    </button>
+                                    @can('disable supplier')
+                                        <button class="btn btn-warning btn-sm" wire:click='disableSupplier({{$supplier->id}})'>
+                                            <i class="fa fa-ban"></i>
+                                        </button>
+                                    @else
+                                    -
+                                    @endcan
                                 @else
-                                    <button class="btn btn-success btn-sm" wire:click='disableSupplier({{$supplier->id}})'>
-                                        <i class="fa fa-check"></i>
-                                    </button>
+                                    @can('enable supplier')
+                                        <button class="btn btn-success btn-sm" wire:click='disableSupplier({{$supplier->id}})'>
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    @else
+                                    -
+                                    @endcan
                                 @endif
                             </td>
                         </tr>

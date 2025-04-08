@@ -64,9 +64,13 @@
                             <td style="font-size: 10pt;" class="text-center">{{date("d-m-Y", strtotime($invoice->due_date))}}</td>
                             
                             <td style="font-size: 10pt;" class="text-center">
-                                <button class="btn btn-secondary btn-sm" wire:click='print({{$invoice->id}})'>
+                                @can('print invoice')
+                                  <button class="btn btn-secondary btn-sm" wire:click='print({{$invoice->id}})'>
                                     <i class="fa fa-print"></i>
-                                </button>
+                                  </button>
+                                @else
+                                  -
+                                @endcan
                             </td>
                             
                         </tr>

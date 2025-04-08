@@ -137,9 +137,13 @@
                             </td>
                             <td style="font-size: 10pt;" class="text-center">
                                 @if ($ap->status != "Pago")
-                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountPayable({{$ap->id}})'>
-                                        <i class="fa fa-check"></i>
-                                    </button>
+                                    @can('pay accounts payable')
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountPayable({{$ap->id}})'>
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    @else
+                                        -
+                                    @endcan
                                 @else
                                     -
                                 @endif
