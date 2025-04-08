@@ -2,18 +2,14 @@
 
 namespace App\Livewire\Customers;
 
-use App\Models\AccountReceivable;
+use App\Jobs\SendSMS;
 use App\Models\CommunalUnity;
-use App\Models\Invoice;
-use App\Models\Service;
 use Livewire\Component;
 use App\Models\ServiceCategory;
-use App\Models\ServiceContracted;
 use App\Services\Customer\LicenseCustomerService;
 use App\Services\Finance\AccountReceivableService;
 use App\Services\Finance\InvoiceService;
 use App\Services\Finance\ServiceContractedService;
-use App\Support\SMS;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Features\SupportEvents\Event;
@@ -115,7 +111,7 @@ class ContractedServiceForm extends Component
             $this->dispatch('updateComponent')->to(Customer::class);
             $this->clearFields();
 
-            SMS::send($this->customer->phone, "Fatura N. ". $invoice->number ." criada. Montante: ".formatAmount($invoice->total_amount)." MT. Obrigado!");
+            SendSMS::dispatch($this->customer->phone, "Fatura N. ". $invoice->number ." criada. Montante: ".formatAmount($invoice->total_amount)." MT. Obrigado!");
 
             return $this->dispatch("cadastrado", [
                 "modal" => "#meusServicos",

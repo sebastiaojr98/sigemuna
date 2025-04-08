@@ -2,8 +2,8 @@
 
 namespace App\Livewire\App;
 
+use App\Jobs\SendSMS;
 use App\Models\License;
-use App\Support\SMS;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +84,9 @@ class Licenses extends Component
         try {
             $license->signed = 'Sim';
             $license->save();
-            SMS::send($license->customer->phone, "A sua Licenca N. ". $license->code ." foi emitida. dirija-se a EMUSANA para levantar, Obrigado!");
+
+            SendSMS::dispatch($license->customer->phone, "A sua Licenca N. ". $license->code ." foi emitida. dirija-se a EMUSANA para levantar, Obrigado!");
+            
             return $this->dispatch("pagamento", [
                 "modal" => "#makePayment",
                 "title" => "Sucesso",

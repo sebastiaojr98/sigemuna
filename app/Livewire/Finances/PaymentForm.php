@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Finances;
 
+use App\Jobs\SendSMS;
 use Livewire\Component;
 use App\Models\PaymentMethod;
 use App\Models\Receipt;
@@ -107,7 +108,7 @@ class PaymentForm extends Component
 
             $this->dispatch('updateComponent')->to(AccountsReceivable::class);
 
-            SMS::send($re->invoice->customer->phone, "Factura N. ". $re->invoice->number. " paga no valor de ".formatAmount($re->amount_paid)." MT. Obrigado!");
+            SendSMS::dispatch($re->invoice->customer->phone, "Factura N. ". $re->invoice->number. " paga no valor de ".formatAmount($re->amount_paid)." MT. Obrigado!");
 
             return $this->dispatch("pagamento", [
                 "modal" => "#makePayment",
