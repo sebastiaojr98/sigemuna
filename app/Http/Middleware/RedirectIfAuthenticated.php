@@ -25,15 +25,9 @@ class RedirectIfAuthenticated
                 foreach (auth()->user()->roles as $key => $role) {
                     switch ($role->name) {
                         case 'admin':
-                            return redirect()->intended(route('dashboard-infrastructure'));
+                            return redirect()->intended(route('dashboard-finance'));
                         break;
-			case 'sanitation technique':                        
-                           return redirect()->intended(route('dashboard-infrastructure'));
-			break;
-			case 'finance technique':
-			   return redirect()->intended(route('dashboard-finance'));
-			break;
-			default:
+                        default:
                             return redirect()->intended(route('profile'));
                         break;
                     }

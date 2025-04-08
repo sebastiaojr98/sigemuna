@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'herminigildosebastiaoali@gmail.com',
                 'email_verified_at' => date('Y-m-d H:i:s'),
                 'password' => Hash::make('password'),
-                'phone' => '+258833517323',
+                'phone' => '833517323',
                 'role' => 'Software Engenier',
                 'biography' => 'Minha Biografia'
             ),

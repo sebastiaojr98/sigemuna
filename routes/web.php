@@ -39,32 +39,82 @@ Route::middleware(['auth'])->group(function(){
 
 Route::middleware(['auth', '2fa'])->group(function(){
     Route::prefix("dashboard")->group(function(){
-        Route::get("/infrastructure", DashboardInfra::class)->name("dashboard-infrastructure")->middleware(['permission:view infrastructure report']);
-        Route::get("/finances", FinancesDashboard::class)->name("dashboard-finance")->middleware(['permission:view financial report']);
+        Route::get("/infrastructure", DashboardInfra::class)
+            ->name("dashboard-infrastructure")
+            ->middleware(['permission:view infrastructure report']);
+
+        Route::get("/finances", FinancesDashboard::class)
+            ->name("dashboard-finance")
+            ->middleware(['permission:view financial report']);
     });
 
-    Route::get("employees", Employees::class)->name("employees")->middleware(['permission:view employee report']);
-    Route::get("employee/{employee}", Employee::class)->name("employee")->middleware(['permission:create employee']);
+    Route::get("employees", Employees::class)
+        ->name("employees")
+        ->middleware(['permission:view employee report']);
+    
+    Route::get("employee/{employee}", Employee::class)
+        ->name("employee")
+        ->middleware(['permission:create employee']);
 
-    Route::get("customers", Customers::class)->name("customers")->middleware(['permission:view customer report']);
-    Route::get("customers/{customer}", Customer::class)->name("customer")->middleware(['permission:create client']);
+    Route::get("customers", Customers::class)
+        ->name("customers")
+        ->middleware(['permission:view customers']);
 
-    Route::get('licenses', AppLicenses::class)->name("licenses");
-    Route::get('invoices', Invoices::class)->name('invoices');
-    Route::get('receipts', Receipts::class)->name('receipts');
+    Route::get("customers/{customer}", Customer::class)
+        ->name("customer")
+        ->middleware(['permission:view customer']);
 
-    Route::get("suppliers", Suppliers::class)->name("suppliers");
-    Route::get("expenses", FinancesExpenses::class)->name("expenses")->middleware(['permission:view expense report']);
+    Route::get('licenses', AppLicenses::class)
+        ->name("licenses")
+        ->middleware(['permission:view licenses']);
 
-    Route::get("accounts-receivable", AccountsReceivable::class)->middleware(['permission:view accounts receivable'])->name("accounts-receivable");
-    Route::get("accounts-payable", AccountsPayable::class)->middleware(['permission:view accounts receivable'])->name("accounts-payable");
+    Route::get('invoices', Invoices::class)
+        ->name('invoices')
+        ->middleware(['permission:view invoices']);
 
-    Route::get("investors", Investors::class)->name("investors")->middleware(['permission:view investor']);
-    Route::get("investments", Investments::class)->name("investments")->middleware(['permission:view investment report']);
-    Route::get("funders", Funders::class)->name("funders")->middleware(['permission:view financier']);
-    Route::get("financings", Financings::class)->name("financings")->middleware(['permission:view financing report']);
-    Route::get("infrastructures", Infrastructures::class)->name("infrastructures")->middleware(['permission:view infrastructure report', 'permission:view infrastructure report']);
-    Route::get("infrastructure/{infrastructure}", Infrastructure::class)->name("infrastructure")->middleware(['permission:create infrastructure', 'permission:create infrastructure']);
+    Route::get('receipts', Receipts::class)
+        ->name('receipts')
+        ->middleware(['permission:view receipts']);
+
+    Route::get("suppliers", Suppliers::class)
+        ->name("suppliers")
+        ->middleware(['permission:view suppliers']);
+
+    Route::get("expenses", FinancesExpenses::class)
+        ->name("expenses")
+        ->middleware(['permission:view expenses']);
+
+    Route::get("accounts-receivable", AccountsReceivable::class)
+        ->name("accounts-receivable")
+        ->middleware(['permission:view accounts receivable']);
+
+    Route::get("accounts-payable", AccountsPayable::class)
+        ->name("accounts-payable")
+        ->middleware(['permission:view accounts payable']);
+
+    Route::get("investors", Investors::class)
+        ->name("investors")
+        ->middleware(['permission:view investor']);
+
+    Route::get("investments", Investments::class)
+        ->name("investments")
+        ->middleware(['permission:view investment report']);
+
+    Route::get("funders", Funders::class)
+        ->name("funders")
+        ->middleware(['permission:view financier']);
+
+    Route::get("financings", Financings::class)
+        ->name("financings")
+        ->middleware(['permission:view financing report']);
+
+    Route::get("infrastructures", Infrastructures::class)
+        ->name("infrastructures")
+        ->middleware(['permission:view infrastructure report']);
+
+    Route::get("infrastructure/{infrastructure}", Infrastructure::class)
+        ->name("infrastructure")
+        ->middleware(['permission:create infrastructure']);
 
 
     Route::get("profile", UserProfile::class)->name("profile");
