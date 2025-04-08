@@ -137,10 +137,12 @@
                             </td>
                             <td style="font-size: 10pt;" class="text-center">
                                 @if ($accountR->status != "Pago")
-                                    @can('pay accounts receivable')
+                                    @can('collect account receivable')
                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#makePayment" wire:click='selectAccountReceivable({{$accountR}})'>
                                             <i class="fa fa-check"></i>
                                         </button>
+                                    @else
+                                        -
                                     @endcan
                                 @else
                                     -

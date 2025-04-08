@@ -59,6 +59,9 @@ class PermissionSeeder extends Seeder
             ['id' => 45, 'name' => 'view accounts payable', 'guard_name' => 'web'],
             ['id' => 46, 'name' => 'pay accounts payable', 'guard_name' => 'web'],
             ['id' => 47, 'name' => 'view expenses', 'guard_name' => 'web'],
+            ['id' => 48, 'name' => 'enable supplier', 'guard_name' => 'web'],
+            ['id' => 49, 'name' => 'disable supplier', 'guard_name' => 'web'],
+            ['id' => 50, 'name' => 'disable expense', 'guard_name' => 'web'],
         ];
 
         DB::table('permissions')->insert($permissions);

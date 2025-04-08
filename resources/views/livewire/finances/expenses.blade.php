@@ -35,9 +35,13 @@
                         </button>--}}
                     </div>
                     <div class="mt-4">
-                        <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createExpense">
+                        @can('create expense')
+                          <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createExpense">
                             <i class="fas fa-file-alt"></i> Novo
                         </button>
+                        @else
+                          -
+                        @endcan
                     </div>
                 </div>
                 <hr>
@@ -71,6 +75,11 @@
                             <td style="font-size: 10pt;">{{date("d-m-Y", strtotime($expense->start_date))}}</td>
                             <td class="text-center">
                                 @if($expense->is_recurring ==  "Sim")
+                                    @can('disable expense')
+                                    
+                                    @else
+                                        -
+                                    @endcan
                                     <button class="btn btn-warning btn-sm" wire:click='disableExpense({{$expense->id}})'>
                                         <i class="fa fa-ban"></i>
                                     </button>

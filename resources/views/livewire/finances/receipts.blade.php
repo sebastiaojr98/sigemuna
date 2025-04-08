@@ -66,9 +66,13 @@
                             <td style="font-size: 10pt;">{{$receipt->userCreated->name}}</td>
                             
                             <td style="font-size: 10pt;" class="text-center">
-                                <button class="btn btn-secondary btn-sm" wire:click='print({{$receipt->id}})'>
+                                @can('print receipts')
+                                  <button class="btn btn-secondary btn-sm" wire:click='print({{$receipt->id}})'>
                                     <i class="fa fa-print"></i>
-                                </button>
+                                  </button>
+                                @else
+                                  -
+                                @endcan
                             </td>
                             
                         </tr>

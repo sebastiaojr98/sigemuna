@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    @can('create client')
+                    @can('create customer')
                       <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createClient">
                           <i class="fas fa-user-plus"></i> Novo
                       </button>
@@ -17,7 +17,7 @@
                     </form>
                 </div>
                 <hr>
-                <form class="row align-items-center mr-2" wire:submit="createReport()">
+                <!--form class="row align-items-center mr-2" wire:submit="createReport()">
                     <div class="form-group col-4">
                         <label for="">Tipo de Conta</label>
                         <select name="" id="" class="form-control" wire:model="account" required>
@@ -35,7 +35,7 @@
                         </button>
                     </div>
                 </form>
-                <hr>
+                <hr-->
                 <div>
                     <table class="table table-striped table-sms">
                       <thead>
@@ -54,7 +54,7 @@
                             <td style="font-size: 10pt;">{{$customer->name}}</td>
                             <td style="font-size: 10pt;">{{$customer->nuit ? $customer->nuit : "-"}}</td>
                             <td style="font-size: 10pt;">{{formatNumberMoz($customer->phone)}}</td>
-                            @can('create client')
+                            @can('view customer')
                               <td style="font-size: 10pt;" class="text-center">
                                   <a href="{{route("customer", $customer->id)}}" class="btn btn-primary btn-sm px-4">
                                       <i class="fas fa-eye"></i>

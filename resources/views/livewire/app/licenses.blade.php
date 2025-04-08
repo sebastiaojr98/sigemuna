@@ -107,14 +107,23 @@
 
                             
                             <td style="font-size: 10pt;" class="text-center">
+                                
+                                @can('print license')
                                 <button class="btn btn-secondary btn-sm" wire:click='print({{$license->id}})'>
                                     <i class="fa fa-print"></i>
                                 </button>
+                                @else
+                                    -
+                                @endcan
 
                                 @if($license->signed === "Não")
+                                    @can('sign license')
                                     <button class="btn btn-primary btn-sm" wire:click='subscribe({{$license->id}})'>
                                         <i class="fa fa-check"></i>
                                     </button>
+                                    @else
+                                        -
+                                    @endcan
                                 @endif
                             </td>
                             

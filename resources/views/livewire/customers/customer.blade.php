@@ -117,10 +117,12 @@
               <div class="card-header d-flex flex-between-center">
                 <h5 class="mb-0 text-nowrap py-2 py-xl-0">Serviços contratados</h5>
                 <div>
-                  <button class="btn btn-primary btn-sm me-2 px-4" type="button" data-bs-toggle="modal" data-bs-target="#meusServicos">
-                      <span class="fas fa-file fs--2"></span><span class="d-none d-sm-inline-block ms-1 align-middle">Novo</span>
-                  </button>
-              </div>
+                    @can('request customer service')
+                        <button class="btn btn-primary btn-sm me-2 px-4" type="button" data-bs-toggle="modal" data-bs-target="#meusServicos">
+                            <span class="fas fa-file fs--2"></span><span class="d-none d-sm-inline-block ms-1 align-middle">Novo</span>
+                        </button>
+                    @endcan
+                </div>
               </div>
               <div class="card-body p-0">
                   <table class="table mb-0 fs--1 border-200">
