@@ -4,6 +4,8 @@
     class SMS{
         public static function send($phone, $message)
         {
+            $phone = str_replace(' ', '', $phone);
+            
             $client = new \GuzzleHttp\Client();
             $response = $client->request('GET', env('SMS_HOST').'/v1/sms/send?phone='.$phone.'&message='.$message);
             
