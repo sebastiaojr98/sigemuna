@@ -2,16 +2,20 @@
 
 namespace App\Livewire\App;
 
+use App\Jobs\SendSMS;
 use App\Models\License;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\Features\SupportEvents\Event;
+use Livewire\WithPagination;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Licenses extends Component
 {
+    use WithPagination;
     public function render()
     {
         $report = License::where('status', '!=', 'Pendente')
@@ -75,13 +79,27 @@ class Licenses extends Component
         }
     }
 
-    public function subscribe(License $license): void
+    public function subscribe(License $license): Event
     {
         try {
             $license->signed = 'Sim';
             $license->save();
+
+            SendSMS::dispatch($license->customer->phone, "A sua Licenca N. ". $license->code ." foi emitida. dirija-se a EMUSANA para levantar, Obrigado!");
+            
+            return $this->dispatch("pagamento", [
+                "modal" => "#makePayment",
+                "title" => "Sucesso",
+                "icon" => "success",
+                "text" => "Pedido processado com sucesso."
+            ]);
         } catch (\Exception $e) {
-            dd($e->getMessage());
+            return $this->dispatch("pagamento", [
+                "modal" => "#makePayment",
+                "title" => "Falha",
+                "icon" => "error",
+                "text" => "Falha ao processar o pedido, tenta novamente mais tarde."
+            ]);
         }
     }
 }

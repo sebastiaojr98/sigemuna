@@ -32,15 +32,15 @@ class AccountsReceivable extends Component
         
         
         if(empty($this->filter) || empty($this->filterValue)):
-            $accountsReceivable = AccountReceivable::orderBy('created_at', 'desc')->paginate(5);
+            $accountsReceivable = AccountReceivable::orderBy('created_at', 'desc')->paginate(3);
         endif;
 
         if($this->filter == 'Factura'):
-            $accountsReceivable = AccountReceivable::where('invoice_number', 'like', '%'.$this->filterValue.'%')->orderBy('created_at', 'desc')->paginate(5);
+            $accountsReceivable = AccountReceivable::where('invoice_number', 'like', '%'.$this->filterValue.'%')->orderBy('created_at', 'desc')->paginate(3);
         endif;
 
         if($this->filter == 'Estado'):
-            $accountsReceivable = AccountReceivable::where('status', 'like', '%'.$this->filterValue.'%')->orderBy('created_at', 'desc')->paginate(5);
+            $accountsReceivable = AccountReceivable::where('status', 'like', '%'.$this->filterValue.'%')->orderBy('created_at', 'desc')->paginate(3);
         endif;
 
         if(($this->filter == "Nome do cliente") && !(empty($this->filterValue))):
