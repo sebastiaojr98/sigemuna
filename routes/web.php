@@ -5,7 +5,6 @@ use App\Livewire\Funders;
 use App\Livewire\Employee;
 use App\Livewire\Employees;
 use App\Livewire\Investors;
-use App\Livewire\Complaints;
 use App\Livewire\Financings;
 use App\Livewire\Investments;
 use App\Livewire\UserProfile;
