@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('verify-otp', [AuthOtpController::class, 'verify'])->name('verify-otp');
 });
 
-Route::middleware(['auth', '2fa'])->group(function(){
+Route::middleware(['2fa', 'auth'])->group(function(){
     Route::prefix("dashboard")->group(function(){
         Route::get("/infrastructure", DashboardInfra::class)
             ->name("dashboard-infrastructure")
@@ -120,7 +120,8 @@ Route::middleware(['auth', '2fa'])->group(function(){
     Route::get("profile", UserProfile::class)->name("profile");
 
     Route::get("logout", function(){
+        session()->forget('otp_verified');
         auth()->logout();
         return redirect()->route("login");
-    });
+    })->name('profile');
 });

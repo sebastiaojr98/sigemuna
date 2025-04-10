@@ -22,12 +22,11 @@ class AuthOtpController extends Controller
         $otp = Cache::get('otp_' . auth()->id());
 
         if ($request->otp == $otp) {
-            Cache::forget('otp_' . auth()->id());
-            
-            session()->put('otp_verified', true);
-            session()->forget('otp_sent');
 
-            return redirect()->intended('/profile');
+            session()->put('otp_verified', true);
+            Cache::forget('otp_' . auth()->id());
+
+            return redirect()->route('profile');
         }
 
         return back()->withErrors(['otp' => 'OTP inválido ou expirado']);
